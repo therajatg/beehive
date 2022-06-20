@@ -1,0 +1,45 @@
+.rightNav {
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  row-gap: 4rem;
+  padding: 0 3rem;
+}
+
+.search {
+  position: relative;
+  display: flex;
+  background-color: var(--secondary-background-color);
+  width: 100%;
+  align-items: center;
+  border-radius: 1rem;
+}
+
+.searchIcon {
+  position: absolute;
+  margin-left: 1rem;
+}
+
+input[type="search"] {
+  width: 100%;
+  background-color: var(--secondary-background-color);
+  height: 2rem;
+  padding-left: 3rem;
+  border-radius: 1rem;
+  color: var(--text-color);
+}
+
+.whoToFollow {
+  min-height: 35rem;
+  width: 100%;
+  background-color: var(--secondary-background-color);
+  border-radius: 3rem;
+  padding: 3rem;
+  font-size: larger;
+  font-weight: 600;
+}
