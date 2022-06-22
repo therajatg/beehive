@@ -1,0 +1,18 @@
+.whatHappening {
+  font-size: larger;
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.post {
+  border-bottom: 3px solid var(--secondary-background-color);
+  padding: 2rem;
+}
+
+.profilePic {
+  height: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  border-radius: 9999rem;
+}

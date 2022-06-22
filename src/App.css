@@ -1,51 +1,67 @@
-.App {
-  text-align: center;
+/* @import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+
+:root {
+  --sidebar-background-color: #1b2530;
+  --background-color: black;
+  --secondary-background-color: rgb(22, 27, 31);
+  --primary-text-color: white;
+  --secondary-text-color: rgb(113, 118, 123);
+  --link-dark-color: #1f80e0;
+  --link-light-color: #3bb2f6;
+  --text-style: "Ubuntu", sans-serif;
+
+  /* --nav-search-color: #121926;
+  --dropdown-category-background-color: rgba(255, 122, 89, 0);
+  --dropdown-category-text-color: rgba(255, 255, 255, 0.6);
+  --nav-text-color: rgba(242, 244, 246, 0.9);
+  --text-color: white;
+
+  --card-text-background-color-one: rgba(4, 8, 15, 0);
+  --card-text-background-color-two: #192133;
+  --card-button-background-hover-color: grey;
+  --nav-side-padding: 1rem;
+  --body-side-padding: 1rem;
+  --general-font: "Arvo", serif;
+  --stylish-font: "Pacifico", cursive; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: border-box;
+  font-family: var(--text-style);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+main {
+  display: flex;
 }
 
-.App-header {
-  background-color: #22201c;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
   min-height: 100vh;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+main {
+  margin-top: 1rem;
+}
+
+.content {
+  font-family: var(--text-style);
+  border-right: 3px solid var(--secondary-background-color);
+  width: 40%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  border-left: 3px solid var(--secondary-background-color);
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.brand-title {
-  font-size: 3rem;
-  color: #d9d9d9;
-}
-
-.brand-title span {
-  color: #ffde59;
-}
-
-.brand-description {
-  font-size: 1.4rem;
-}
-
-.links {
-  display: flex;
-}
-
-.links a {
-  color: #d9d9d9;
-  font-size: 1.2rem;
-  margin: 1rem;
+.lightText {
+  color: var(--secondary-text-color);
 }
