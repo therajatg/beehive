@@ -8,7 +8,7 @@ const initialState = {
 
 const login = createAsyncThunk("/auth/login", async () => {
   const res = await axios.post("/api/auth/login", {
-    email: "rajatgupta@gmail.com",
+    userName: "rajatgupta",
     password: "rajat123",
   });
   return res.data.encodedToken;
