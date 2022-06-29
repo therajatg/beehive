@@ -1,29 +1,19 @@
 import style from "./signup.module.css";
-import { useAuth } from "../../contexts/authContext";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { signup } from "../../features/authSlice";
 
 export function Signup() {
-  const { authState, authDispatch } = useAuth();
-  const { user } = authState;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [userDetail, setUserDetail] = useState({});
 
-  async function signupHandler(e) {
+  const signupHandler = (e) => {
+    console.log(userDetail);
     e.preventDefault();
-    try {
-      const res = await axios.post("/api/auth/signup", {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.userName,
-        password: user.password,
-      });
-      localStorage.setItem("token", res.data.encodedToken);
-      authDispatch({ type: "TOKEN", payload: res.data.encodedToken });
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
-  }
+    dispatch(signup(userDetail));
+  };
 
   return (
     <div className={style.signupPage}>
@@ -36,12 +26,9 @@ export function Signup() {
               type="text"
               id="firstName"
               name="firstName"
-              required
+              value={userDetail.firstName}
               onChange={(e) =>
-                authDispatch({
-                  type: "FIRST_NAME",
-                  payload: e.target.value,
-                })
+                setUserDetail({ ...userDetail, firstName: e.target.value })
               }
             />
           </div>
@@ -51,12 +38,9 @@ export function Signup() {
               type="text"
               id="lastName"
               name="lastName"
-              required
+              value={userDetail.lastName}
               onChange={(e) =>
-                authDispatch({
-                  type: "LAST_NAME",
-                  payload: e.target.value,
-                })
+                setUserDetail({ ...userDetail, lastName: e.target.value })
               }
             />
           </div>
@@ -67,12 +51,9 @@ export function Signup() {
             type="email"
             id="email"
             name="email"
-            required
+            value={userDetail.email}
             onChange={(e) =>
-              authDispatch({
-                type: "EMAIL",
-                payload: e.target.value,
-              })
+              setUserDetail({ ...userDetail, email: e.target.value })
             }
           />
         </div>
@@ -82,12 +63,9 @@ export function Signup() {
             type="text"
             id="username"
             name="username"
-            required
+            value={userDetail.username}
             onChange={(e) =>
-              authDispatch({
-                type: "USER_NAME",
-                payload: e.target.value,
-              })
+              setUserDetail({ ...userDetail, username: e.target.value })
             }
           />
         </div>
@@ -97,23 +75,15 @@ export function Signup() {
             type="password"
             id="password"
             name="password"
-            required
+            value={userDetail.password}
             onChange={(e) =>
-              authDispatch({
-                type: "PASSWORD",
-                payload: e.target.value,
-              })
+              setUserDetail({ ...userDetail, password: e.target.value })
             }
           />
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            required
-          />
+          <input type="password" id="confirmPassword" name="confirmPassword" />
         </div>
         <button className={style.signupBtn}>Create New Account</button>
         <p className={style.loginLine}>

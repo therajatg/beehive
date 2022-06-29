@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App";
 import { makeServer } from "./server";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "./frontend/contexts/index";
+import { Provider } from "react-redux";
+import { store } from "./frontend/store";
 
 // Call make Server
 makeServer();
@@ -12,9 +13,9 @@ makeServer();
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
+      <Provider store={store}>
         <App />
-      </AuthProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

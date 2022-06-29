@@ -10,7 +10,7 @@ export const users = [
     _id: uuid(),
     firstName: "Rajat",
     lastName: "Gupta",
-    userName: "rajatgupta",
+    username: "rajatgupta",
     password: "rajat123",
     createdAt: formatDate(),
     updatedAt: formatDate(),
