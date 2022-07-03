@@ -25,12 +25,9 @@ export function CommentModal({
   };
 
   const addCommentHandler = () => {
-    dispatch(addComment(postId, { commentData: text }, token));
+    dispatch(addComment({ postId, commentData: { text }, token }));
     setCommentModal(false);
   };
-  //addComment is failing
-
-  console.log(singlePost);
 
   return (
     <div className={style.modal}>
@@ -39,10 +36,10 @@ export function CommentModal({
         <div className={style.avatarAndInput}>
           <img
             className="profilePic"
-            src={singlePost.avatarURL}
+            src={singlePost?.avatarURL}
             alt="Profile-Pic"
           />
-          {singlePost.content}
+          {singlePost?.content}
         </div>
       </div>
       <div className={style.avatarAndInput}>

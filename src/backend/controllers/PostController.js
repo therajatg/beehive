@@ -86,7 +86,8 @@ export const createPostHandler = function (schema, request) {
         likedBy: [],
         dislikedBy: [],
       },
-      username: user.username, //problem here
+      comments: [],
+      username: user.username,
       createdAt: formatDate(),
       updatedAt: formatDate(),
     };
