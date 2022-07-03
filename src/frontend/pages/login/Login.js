@@ -51,7 +51,7 @@ export function Login() {
             className={style.guestLoginBtn}
             onClick={() =>
               setUserDetail({
-                username: "rajatgupta",
+                username: "rajat",
                 password: "rajat123",
               })
             }

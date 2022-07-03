@@ -69,3 +69,10 @@ main {
 a {
   text-decoration: none;
 }
+
+.profilePic {
+  height: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  border-radius: 9999rem;
+}

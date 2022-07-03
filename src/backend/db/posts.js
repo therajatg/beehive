@@ -6,33 +6,47 @@ import { formatDate } from "../utils/authUtils";
  * You can add default posts of your wish with different attributes
  * */
 
+const commonURL =
+  "https://res.cloudinary.com/therajatg/image/upload/v1655625579/social%20media";
+
 export const posts = [
   {
     _id: uuid(),
-    content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    username: "adarshbalika",
+    firstName: "Elon",
+    lastName: "Musk",
+    username: "elon",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    content: "Falcon 5 found a completely new world below the surface of mars.",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Peter",
+          lastName: "Thiel",
+          username: "peter",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+        {
+          _id: uuid(),
+          firstName: "Balaji",
+          lastName: "Srinivasan",
+          username: "balaji",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+      ],
+      dislikedBy: [],
+    },
     comments: [
       {
         _id: uuid(),
-        username: "shubhamsoni",
-        text: "Interesting",
-        votes: {
-          upvotedBy: [],
-          downvotedBy: [],
-        },
-      },
-      {
-        _id: uuid(),
-        username: "sohamshah",
-        text: "Wow!",
+        firstName: "Balaji",
+        lastName: "Srinivasan",
+        username: "balaji",
+        avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        text: "Bro this is so cool. Have you found anyone living there?",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -42,36 +56,227 @@ export const posts = [
   },
   {
     _id: uuid(),
-    content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+    firstName: "Rick",
+    lastName: "Steves",
+    username: "rick",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    content: "New series dedicated to the remote places in spain coming soon.",
     likes: {
-      likeCount: 0,
-      likedBy: [],
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Ryan Van",
+          lastName: "Duzer",
+          username: "ryan",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+        {
+          _id: uuid(),
+          firstName: "Garry",
+          lastName: "Tan",
+          username: "garry",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+      ],
       dislikedBy: [],
     },
-    username: "shubhamsoni",
-
     comments: [
       {
         _id: uuid(),
-        username: "shubhamsoni",
-        text: "Interesting",
-        votes: {
-          upvotedBy: [],
-          downvotedBy: [],
-        },
-      },
-      {
-        _id: uuid(),
-        username: "sohamshah",
-        text: "Wow!",
+        username: "garry",
+        firstName: "Garry",
+        lastName: "Tan",
+        text: "I would love to go to spain someday.",
+        avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
         votes: {
           upvotedBy: [],
           downvotedBy: [],
         },
       },
     ],
+  },
+
+  {
+    _id: uuid(),
+    firstName: "Naval",
+    lastName: "Ravikant",
+    username: "naval",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
     createdAt: formatDate(),
     updatedAt: formatDate(),
+    content:
+      "A busy mind accelerates the perceived passage of time. Buy more time by cultivating peace of mind",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Peter",
+          lastName: "Thiel",
+          username: "peter",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+        {
+          _id: uuid(),
+          firstName: "Rajat",
+          lastName: "Gupta",
+          username: "rajat",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+      ],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: uuid(),
+        username: "elon",
+        firstName: "Elon",
+        lastName: "Musk",
+        text: "and only a peaceful mind like yours can think this clearly.",
+        avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    firstName: "Garry",
+    lastName: "Tan",
+    username: "garry",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    content:
+      "Recently we provided funding of 10 million USD to Cruise which is paving way for self driving cars.",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Rajat",
+          lastName: "Gupta",
+          username: "rajat",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+        {
+          _id: uuid(),
+          firstName: "Rick",
+          lastName: "Steves",
+          username: "rick",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+      ],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: uuid(),
+        username: "rajat",
+        firstName: "Rajat",
+        lastName: "Gupta",
+        text: "Awesome",
+        avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    firstName: "Ryan Van",
+    lastName: "Duzer",
+    username: "ryan",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    content:
+      "Man! I love Mexico. Doesn't matter how many times I pedal on mexican roads, the kindness of strangers surprises me every single time.",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Rick",
+          lastName: "Steves",
+          username: "rick",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+        {
+          _id: uuid(),
+          firstName: "Balaji",
+          lastName: "Srinivasan",
+          username: "balaji",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+      ],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: uuid(),
+        username: "rick",
+        firstName: "Rick",
+        lastName: "Steves",
+        text: "I'll love to pedal on mexican roads with you.",
+        avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+  },
+
+  {
+    _id: uuid(),
+    firstName: "Balaji",
+    lastName: "Srinivasan",
+    username: "balaji",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    content: "Next week I am releasing my new book: The Network State.",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Elon",
+          lastName: "Musk",
+          username: "elon",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+        {
+          _id: uuid(),
+          firstName: "Rajat",
+          lastName: "Gupta",
+          username: "rajat",
+          avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        },
+      ],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        _id: uuid(),
+        username: "rajat",
+        firstName: "Rajat",
+        lastName: "Gupta",
+        text: "Cool! I was waiting for this for so long.",
+        avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
   },
 ];
