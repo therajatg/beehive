@@ -6,17 +6,24 @@ import { IoIosPeople } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../features/authSlice";
+import { addPost } from "../../features/postsSlice";
+import { PostModal } from "../index";
 
-export function LeftNav() {
+export function LeftNav({ postModal, setPostModal }) {
   const token = useSelector((store) => store.auth.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const loginHandler = () => {
     navigate("/login");
   };
   const logoutHandler = () => {
     dispatch(logout());
     localStorage.removeItem("token");
+  };
+
+  const postHandler = () => {
+    token ? setPostModal((prev) => !prev) : navigate("/login");
   };
 
   return (
@@ -62,12 +69,14 @@ export function LeftNav() {
         )}
 
         <li>
-          <button className={style.postBtn}>Tweet</button>
+          <button className={style.postBtn} onClick={postHandler}>
+            Post
+          </button>
         </li>
       </div>
       <div className={style.profile}>
         <img
-          className={style.profilePic}
+          className="profilePic"
           src="https://res.cloudinary.com/therajatg/image/upload/v1655625579/social%20media/mypic_hejkou.jpg"
           alt="Profile-Pic"
         />
@@ -77,6 +86,14 @@ export function LeftNav() {
           <span>@rajatg</span>
         </div>
       </div>
+      {postModal && (
+        <PostModal
+          dispatch={dispatch}
+          addPost={addPost}
+          token={token}
+          setPostModal={setPostModal}
+        />
+      )}
     </div>
   );
 }
