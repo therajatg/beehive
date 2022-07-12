@@ -61,9 +61,14 @@ const editPost = createAsyncThunk(
 const likePost = createAsyncThunk(
   "posts/likePost",
   async ({ postId, token }) => {
-    const response = await axios.post(`/api/posts/like/${postId}`, {
-      Headers: { authorization: token },
-    });
+    console.log("like post executed");
+    const response = await axios.post(
+      `/api/posts/like/${postId}`,
+      {},
+      {
+        headers: { authorization: token },
+      }
+    );
     return response.data.posts;
   }
 );
@@ -71,9 +76,14 @@ const likePost = createAsyncThunk(
 const dislikePost = createAsyncThunk(
   "posts/dislikePost",
   async ({ postId, token }) => {
-    const response = await axios.post(`/api/posts/dislike/${postId}`, {
-      Headers: { authorization: token },
-    });
+    console.log("dislike post executed");
+    const response = await axios.post(
+      `/api/posts/dislike/${postId}`,
+      {},
+      {
+        headers: { authorization: token },
+      }
+    );
     return response.data.posts;
   }
 );
@@ -89,14 +99,12 @@ const getAllComments = createAsyncThunk(
 const addComment = createAsyncThunk(
   "posts/addComment",
   async ({ postId, commentData, token }) => {
-    console.log(1);
     const response = await axios.post(
       `/api/comments/add/${postId}`,
       { commentData },
       { headers: { authorization: token } }
     );
-    console.log(response.data);
-    return response.data;
+    return response.data.posts;
   }
 );
 
@@ -142,6 +150,45 @@ const downvoteComment = createAsyncThunk(
       { Headers: { authorization: token } }
     );
     return response.data.posts;
+  }
+);
+
+const getAllBookmarks = createAsyncThunk(
+  "posts/getAllBookmarks",
+  async (token) => {
+    const response = await axios.get("/api/users/bookmark", {
+      headers: { authorization: token },
+    });
+    return response.data.bookmarks;
+  }
+);
+
+const addBookmark = createAsyncThunk(
+  "posts/addBookmark",
+  async ({ postId, token }) => {
+    const response = await axios.post(
+      `/api/users/bookmark/${postId}`,
+      {},
+      {
+        headers: { authorization: token },
+      }
+    );
+    return response.data.bookmarks;
+  }
+);
+
+const removeBookmark = createAsyncThunk(
+  "posts/removeBookmark",
+  async ({ postId, token }) => {
+    console.log("remove");
+    const response = await axios.post(
+      `/api/users/remove-bookmark/${postId}`,
+      {},
+      {
+        headers: { authorization: token },
+      }
+    );
+    return response.data.bookmarks;
   }
 );
 
@@ -207,6 +254,7 @@ const postsSlice = createSlice({
     [likePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
+      console.log(state.error);
     },
 
     [dislikePost.fulfilled]: (state, action) => {
@@ -216,6 +264,7 @@ const postsSlice = createSlice({
     [dislikePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
+      console.log(action.error);
     },
 
     [getAllComments.fulfilled]: (state, action) => {
@@ -272,6 +321,36 @@ const postsSlice = createSlice({
       state.postsStatus = "failure";
       state.error = action.error;
     },
+
+    [getAllBookmarks.pending]: (state) => {
+      state.bookmarksStatus = "loading";
+    },
+    [getAllBookmarks.fulfilled]: (state, action) => {
+      state.bookmarksStatus = "success";
+      state.bookmarks = action.payload;
+    },
+    [getAllBookmarks.rejected]: (state, action) => {
+      state.bookmarksStatus = "failure";
+      state.error = action.error;
+    },
+
+    [addBookmark.fulfilled]: (state, action) => {
+      state.bookmarksStatus = "success";
+      state.bookmarks = action.payload;
+    },
+    [addBookmark.rejected]: (state, action) => {
+      state.bookmarksStatus = "failed";
+      state.error = action.error;
+    },
+
+    [removeBookmark.fulfilled]: (state, action) => {
+      state.bookmarksStatus = "success";
+      state.bookmarks = action.payload;
+    },
+    [removeBookmark.rejected]: (state, action) => {
+      state.bookmarksStatus = "failed";
+      state.bookmarks = action.error;
+    },
   },
 });
 
@@ -288,5 +367,9 @@ export {
   deleteComment,
   upvoteComment,
   downvoteComment,
+  getAllBookmarks,
+  addBookmark,
+  removeBookmark,
 };
+
 export const postsReducer = postsSlice.reducer;

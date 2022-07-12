@@ -2,7 +2,7 @@ import style from "./signup.module.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signup } from "../../features/authSlice";
+import { signup } from "../../features/index";
 
 export function Signup() {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import style from "./login.module.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../features/authSlice";
+import { login } from "../../features/index";
 
 export function Login() {
   const [userDetail, setUserDetail] = useState({});

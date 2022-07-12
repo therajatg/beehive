@@ -86,10 +86,13 @@ export const createPostHandler = function (schema, request) {
         likedBy: [],
         dislikedBy: [],
       },
-      comments: [],
-      username: user.username,
       createdAt: formatDate(),
       updatedAt: formatDate(),
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      avatarURL: user.avatarURL,
+      comments: [],
     };
     this.db.posts.insert(post);
     return new Response(201, {}, { posts: this.db.posts });
@@ -177,11 +180,11 @@ export const likePostHandler = function (schema, request) {
         { errors: ["Cannot like a post that is already liked. "] }
       );
     }
-    post.likes.dislikedBy = post.likes.dislikedBy.filter(
-      (currUser) => currUser._id !== user._id
-    );
+    // post.likes.dislikedBy = post.likes.dislikedBy.filter(
+    // 	(currUser) => currUser._id !== user._id
+    // );
     post.likes.likeCount += 1;
-    post.likes.likedBy.push(user); //problem here
+    post.likes.likedBy.push({ _id: user._id, username: user.username });
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
@@ -223,18 +226,18 @@ export const dislikePostHandler = function (schema, request) {
         { errors: ["Cannot decrement like less than 0."] }
       );
     }
-    if (post.likes.dislikedBy.some((currUser) => currUser._id === user._id)) {
-      return new Response(
-        400,
-        {},
-        { errors: ["Cannot dislike a post that is already disliked. "] }
-      );
-    }
+    // if (post.likes.dislikedBy.some((currUser) => currUser._id === user._id)) {
+    // 	return new Response(
+    // 		400,
+    // 		{},
+    // 		{ errors: ["Cannot dislike a post that is already disliked. "] }
+    // 	);
+    // }
     post.likes.likeCount -= 1;
     const updatedLikedBy = post.likes.likedBy.filter(
-      (currUser) => currUser._id !== user._id
+      (currUser) => currUser.username !== user.username
     );
-    post.likes.dislikedBy.push(user);
+    // post.likes.dislikedBy.push(user);
     post = { ...post, likes: { ...post.likes, likedBy: updatedLikedBy } };
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });

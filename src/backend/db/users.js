@@ -78,11 +78,9 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio:
-      "The best thing about Elon Musk is that he makes me question if I'm thinking big enough with my life",
-    userBlog: "https://rajat.net/",
-    userVideos:
-      "https://www.youtube.com/channel/UCXZw8qTFgft9CxRdr1uXeug/videos",
+    about:
+      "The best thing about Elon Musk is that he makes me question if I'm thinking big enough with my life.",
+    website: "https://rajatgupta.net/",
   },
 
   {
@@ -134,8 +132,8 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "Let's go to Mars",
-    userWebsite: "https://www.tesla.com/",
+    about: "Let's go to Mars",
+    website: "https://www.tesla.com/",
   },
 
   {
@@ -180,8 +178,8 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "Pedal the world",
-    userWebsite: "https://www.youtube.com/duzertv/videos",
+    about: "Pedal the world",
+    website: "https://www.youtube.com/duzertv/videos",
   },
 
   {
@@ -219,8 +217,8 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "wanna experience life => come to Europe",
-    userWebsite: "https://www.youtube.com/c/ricksteves/videos",
+    about: "wanna experience life => come to Europe",
+    website: "https://www.youtube.com/c/ricksteves/videos",
   },
 
   {
@@ -265,8 +263,8 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "freedom is the biggest flex",
-    userWebsite: "https://angel.co/",
+    about: "freedom is the biggest flex",
+    website: "https://angel.co/",
   },
 
   {
@@ -304,8 +302,8 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "Make your own state (using the power of community)",
-    userWebsite: "https://balajis.com/",
+    about: "Make your own state (using the power of community)",
+    website: "https://balajis.com/",
   },
 
   {
@@ -343,8 +341,8 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "Funding the future of tech",
-    userWebsite: "https://www.youtube.com/c/GarryTan",
+    about: "Funding the future of tech",
+    website: "https://www.youtube.com/c/GarryTan",
   },
 
   {
@@ -389,7 +387,7 @@ export const users = [
       },
     ],
     bookmarks: [],
-    userBio: "funding one startup at a time",
-    userWebsite: "https://foundersfund.com/team/peter-thiel/",
+    about: "funding one startup at a time",
+    website: "https://foundersfund.com/team/peter-thiel/",
   },
 ];
