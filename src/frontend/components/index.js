@@ -7,3 +7,4 @@ export { Bookmarks } from "./bookmarks/Bookmarks";
 export { Profile } from "./profile/Profile";
 export { SinglePostDetail } from "./singlePostDetail/SinglePostDetail";
 export { EditProfileModal } from "./editProfileModal/EditProfileModal";
+export { Explore } from "./explore/Explore";

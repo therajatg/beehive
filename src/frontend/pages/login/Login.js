@@ -1,20 +1,18 @@
 import style from "./login.module.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/index";
 
 export function Login() {
   const [userDetail, setUserDetail] = useState({});
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const loginHandler = (e) => {
     e.preventDefault();
     dispatch(login(userDetail));
-    let from = location.state?.from?.pathname || "/";
-    navigate(from, { replace: true });
+    navigate("/page/home");
   };
 
   return (

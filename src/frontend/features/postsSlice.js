@@ -61,7 +61,6 @@ const editPost = createAsyncThunk(
 const likePost = createAsyncThunk(
   "posts/likePost",
   async ({ postId, token }) => {
-    console.log("like post executed");
     const response = await axios.post(
       `/api/posts/like/${postId}`,
       {},
@@ -76,7 +75,6 @@ const likePost = createAsyncThunk(
 const dislikePost = createAsyncThunk(
   "posts/dislikePost",
   async ({ postId, token }) => {
-    console.log("dislike post executed");
     const response = await axios.post(
       `/api/posts/dislike/${postId}`,
       {},
@@ -180,7 +178,6 @@ const addBookmark = createAsyncThunk(
 const removeBookmark = createAsyncThunk(
   "posts/removeBookmark",
   async ({ postId, token }) => {
-    console.log("remove");
     const response = await axios.post(
       `/api/users/remove-bookmark/${postId}`,
       {},
@@ -216,7 +213,6 @@ const postsSlice = createSlice({
     [getSinglePost.rejected]: (state, action) => {
       state.singlePostStatus = "failed";
       state.error = action.error;
-      console.log(state.error);
     },
 
     [addPost.fulfilled]: (state, action) => {
@@ -226,7 +222,6 @@ const postsSlice = createSlice({
     [addPost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      console.log(state.error);
     },
 
     [deletePost.fulfilled]: (state, action) => {
@@ -254,7 +249,6 @@ const postsSlice = createSlice({
     [likePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      console.log(state.error);
     },
 
     [dislikePost.fulfilled]: (state, action) => {
@@ -264,7 +258,6 @@ const postsSlice = createSlice({
     [dislikePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      console.log(action.error);
     },
 
     [getAllComments.fulfilled]: (state, action) => {
@@ -283,7 +276,6 @@ const postsSlice = createSlice({
     [addComment.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      console.log(state.error);
     },
 
     [editComment.fulfilled]: (state, action) => {

@@ -2,7 +2,6 @@
   align-self: flex-start;
   position: sticky;
   top: 0;
-  width: 30%;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -12,12 +11,29 @@
 }
 
 .search {
+  width: 100%;
+}
+
+.searchBar {
   position: relative;
   display: flex;
   background-color: var(--secondary-background-color);
   width: 100%;
   align-items: center;
   border-radius: 1rem;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchedProfiles {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 }
 
 .searchIcon {
@@ -50,12 +66,6 @@ input[type="search"] {
   font-weight: 600;
 }
 
-.user {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .avatarAndName {
   display: flex;
   column-gap: 10px;
@@ -74,4 +84,10 @@ input[type="search"] {
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   border: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .rightNav {
+    display: none;
+  }
 }

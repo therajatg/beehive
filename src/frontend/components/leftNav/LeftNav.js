@@ -16,7 +16,6 @@ export function LeftNav({ postModal, setPostModal }) {
     { component: "Home", icon: <AiFillHome /> },
     { component: "Explore", icon: <FaHashtag /> },
     { component: "Bookmarks", icon: <BsFillBookmarkFill /> },
-    { component: "Profile", icon: <FaUserAlt /> },
   ];
 
   const loginHandler = () => {
@@ -24,7 +23,7 @@ export function LeftNav({ postModal, setPostModal }) {
   };
   const logoutHandler = () => {
     dispatch(logout());
-    localStorage.removeItem("token");
+    navigate("/");
   };
 
   const postHandler = () => {
@@ -34,29 +33,46 @@ export function LeftNav({ postModal, setPostModal }) {
   return (
     <div className={style.leftNav}>
       <div className={style.options}>
-        <Link to="/Home">
+        <Link to="/Home" className={style.componentName}>
           <IoIosPeople className={style.logo} />
         </Link>
 
         {arr.map((item) => (
-          <Link to={`/${item.component}`}>
-            <p className={style.option}>
-              {item.icon}
-              <p>{item.component}</p>
-            </p>
+          <Link
+            to={`/page/${item.component.toLowerCase()}`}
+            key={item.component}
+          >
+            <div className={style.option} title={item.component}>
+              <p>{item.icon}</p>
+              <p className={style.componentName}>{item.component}</p>
+            </div>
           </Link>
         ))}
+        <Link to={`/profile/${user?.username}`}>
+          <div className={style.option} title="Profile">
+            <p>
+              <FaUserAlt />
+            </p>
+            <p className={style.componentName}>Profile</p>
+          </div>
+        </Link>
 
         {token ? (
-          <p onClick={logoutHandler} className={style.option}>
-            <AiOutlineLogin />
+          <div
+            onClick={logoutHandler}
+            className={`${style.option} ${style.componentName}`}
+            title="Logout"
+          >
+            <p>
+              <AiOutlineLogin />
+            </p>
             <p>Logout</p>
-          </p>
+          </div>
         ) : (
-          <p onClick={loginHandler} className={style.option}>
+          <div onClick={loginHandler} className={style.option}>
             <AiOutlineLogin />
             Login
-          </p>
+          </div>
         )}
 
         <button
@@ -66,14 +82,14 @@ export function LeftNav({ postModal, setPostModal }) {
           Post
         </button>
       </div>
-      <Link to="/Profile" className={style.profile}>
-        <img className="profilePic" src={user.avatarURL} alt="Profile-Pic" />
-        <div>
+      <Link to={`/profile/${user?.username}`} className={style.profile}>
+        <img className="profilePic" src={user?.avatarURL} alt="Profile-Pic" />
+        <div className={style.componentName}>
           <span>
-            {user.firstName} {user.lastName}
+            {user?.firstName} {user?.lastName}
           </span>
           <br />
-          <span className="lightText">@{user.username}</span>
+          <span className="lightText">@{user?.username}</span>
         </div>
       </Link>
       {postModal && (

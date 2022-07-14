@@ -12,20 +12,6 @@
   --link-dark-color: #1f80e0;
   --link-light-color: #3bb2f6;
   --text-style: "Ubuntu", sans-serif;
-
-  /* --nav-search-color: #121926;
-  --dropdown-category-background-color: rgba(255, 122, 89, 0);
-  --dropdown-category-text-color: rgba(255, 255, 255, 0.6);
-  --nav-text-color: rgba(242, 244, 246, 0.9);
-  --text-color: white;
-
-  --card-text-background-color-one: rgba(4, 8, 15, 0);
-  --card-text-background-color-two: #192133;
-  --card-button-background-hover-color: grey;
-  --nav-side-padding: 1rem;
-  --body-side-padding: 1rem;
-  --general-font: "Arvo", serif;
-  --stylish-font: "Pacifico", cursive; */
 }
 
 * {
@@ -39,7 +25,6 @@ main {
 
 body {
   margin: 0;
-  padding: 0;
   background-color: var(--background-color);
   color: var(--primary-text-color);
   min-height: 100vh;
@@ -49,14 +34,10 @@ button:hover {
   cursor: pointer;
 }
 
-main {
-  /* margin-top: 1rem; */
-}
-
 .content {
   font-family: var(--text-style);
   border-right: 3px solid var(--secondary-background-color);
-  width: 45%;
+  width: 55%;
   display: flex;
   flex-direction: column;
   border-left: 3px solid var(--secondary-background-color);
@@ -76,4 +57,10 @@ a {
   width: 3rem;
   object-fit: cover;
   border-radius: 9999rem;
+}
+
+@media screen and (max-width: 750px) {
+  .content {
+    flex-grow: 1;
+  }
 }
