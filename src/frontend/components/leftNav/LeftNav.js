@@ -5,14 +5,19 @@ import { BsFillBookmarkFill } from "react-icons/bs";
 import { IoIosPeople } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../features/authSlice";
-import { addPost } from "../../features/postsSlice";
+import { logout, addPost } from "../../features/index";
 import { PostModal } from "../index";
 
 export function LeftNav({ postModal, setPostModal }) {
-  const token = useSelector((store) => store.auth.token);
+  const { token, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const arr = [
+    { component: "Home", icon: <AiFillHome /> },
+    { component: "Explore", icon: <FaHashtag /> },
+    { component: "Bookmarks", icon: <BsFillBookmarkFill /> },
+    { component: "Profile", icon: <FaUserAlt /> },
+  ];
 
   const loginHandler = () => {
     navigate("/login");
@@ -29,63 +34,48 @@ export function LeftNav({ postModal, setPostModal }) {
   return (
     <div className={style.leftNav}>
       <div className={style.options}>
-        <Link to="/">
+        <Link to="/Home">
           <IoIosPeople className={style.logo} />
         </Link>
-        <Link to="/">
-          <li>
-            <AiFillHome />
-            <p>Home</p>
-          </li>
-        </Link>
-        <Link to="/explore">
-          <li>
-            <FaHashtag />
-            <p>Explore</p>
-          </li>
-        </Link>
-        <Link to="/bookmarks">
-          <li>
-            <BsFillBookmarkFill />
-            <p>Bookmarks</p>
-          </li>
-        </Link>
-        <Link to="/profile">
-          <li>
-            <FaUserAlt />
-            <p>Profile</p>
-          </li>
-        </Link>
+
+        {arr.map((item) => (
+          <Link to={`/${item.component}`}>
+            <p className={style.option}>
+              {item.icon}
+              <p>{item.component}</p>
+            </p>
+          </Link>
+        ))}
+
         {token ? (
-          <li onClick={logoutHandler} className={style.login}>
+          <p onClick={logoutHandler} className={style.option}>
             <AiOutlineLogin />
-            Logout
-          </li>
+            <p>Logout</p>
+          </p>
         ) : (
-          <li onClick={loginHandler} className={style.login}>
+          <p onClick={loginHandler} className={style.option}>
             <AiOutlineLogin />
             Login
-          </li>
+          </p>
         )}
 
-        <li>
-          <button className={style.postBtn} onClick={postHandler}>
-            Post
-          </button>
-        </li>
+        <button
+          className={`${style.postBtn} ${style.option}`}
+          onClick={postHandler}
+        >
+          Post
+        </button>
       </div>
-      <div className={style.profile}>
-        <img
-          className="profilePic"
-          src="https://res.cloudinary.com/therajatg/image/upload/v1655625579/social%20media/mypic_hejkou.jpg"
-          alt="Profile-Pic"
-        />
+      <Link to="/Profile" className={style.profile}>
+        <img className="profilePic" src={user.avatarURL} alt="Profile-Pic" />
         <div>
-          <span>Rajat Gupta</span>
+          <span>
+            {user.firstName} {user.lastName}
+          </span>
           <br />
-          <span>@rajatg</span>
+          <span className="lightText">@{user.username}</span>
         </div>
-      </div>
+      </Link>
       {postModal && (
         <PostModal
           dispatch={dispatch}

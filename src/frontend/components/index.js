@@ -3,3 +3,7 @@ export { RightNav } from "./rightNav/RightNav";
 export { Content } from "./content/Content";
 export { CommentModal } from "./commentModal/CommentModal";
 export { PostModal } from "./postModal/PostModal";
+export { Bookmarks } from "./bookmarks/Bookmarks";
+export { Profile } from "./profile/Profile";
+export { SinglePostDetail } from "./singlePostDetail/SinglePostDetail";
+export { EditProfileModal } from "./editProfileModal/EditProfileModal";

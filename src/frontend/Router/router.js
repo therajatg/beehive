@@ -6,11 +6,11 @@ import { RequiresAuth } from "./RequiresAuth";
 export function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/test-api" element={<Mockman />} />
-      <Route path="/:postId" element={<SinglePostDetail />} />
+      {/* <Route path="/single-post/:postId" element={<SinglePostDetail />} /> */}
+      <Route path="/:component" element={<Home />} />
       {/* <Route path="*" element={<PageNotFound />} />
       <Route path="/bookmarks" element={<Bookmarks />} />
       <Route path="/profile" element={<Profile />} />

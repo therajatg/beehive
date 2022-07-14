@@ -1,0 +1,25 @@
+.post {
+  border-bottom: 3px solid var(--secondary-background-color);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+
+a {
+  color: var(--primary-text-color);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  color: var(--secondary-text-color);
+}
+
+.actions:hover {
+  cursor: pointer;
+}
+
+.fillColor {
+  color: var(--primary-text-color);
+}

@@ -1,33 +1,16 @@
-.blur {
-  background-color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-
-.whatHappening {
-  font-size: larger;
-  display: flex;
-  align-items: center;
-  column-gap: 1rem;
-  background-color: var(--primary-background-color);
-  border: none;
-  outline: none;
-  color: var(--primary-text-color);
-  width: 100%;
-}
-
-.post {
+/* .post {
   border-bottom: 3px solid var(--secondary-background-color);
   padding: 2rem;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
-}
+} */
 
-.avatarAndInput {
+/* .avatarAndInput {
   display: flex;
   column-gap: 2rem;
   align-items: center;
-}
+} */
 
 .postBtn {
   background-color: var(--link-light-color);
@@ -57,4 +40,8 @@
   width: 3rem;
   object-fit: cover;
   border-radius: 999rem;
+}
+
+.fillColor {
+  color: var(--primary-text-color);
 }

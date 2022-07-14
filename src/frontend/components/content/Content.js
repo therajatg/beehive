@@ -1,29 +1,28 @@
 import style from "./content.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import { BiCommentDetail } from "react-icons/bi";
-import {
-  AiOutlineLike,
-  AiFillLike,
-  AiOutlineDislike,
-  AiFillDislike,
-} from "react-icons/ai";
-import { BsBookmark } from "react-icons/bs";
-import { BsFillBookmarkFill } from "react-icons/bs";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPosts,
   getSinglePost,
   addPost,
   addComment,
-} from "../../features/postsSlice";
+  likePost,
+  dislikePost,
+  removeBookmark,
+  addBookmark,
+  getAllUsers,
+} from "../../features/index";
 import { useState, useEffect } from "react";
 import { CommentModal } from "../index";
 
 export function Content({ commentModal, setCommentModal }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector((store) => store.auth.token);
-  const { posts, singlePost } = useSelector((store) => store.posts);
+  const { token, user } = useSelector((store) => store.auth);
+  const { posts, singlePost, bookmarks } = useSelector((store) => store.posts);
   const [height, setHeight] = useState("auto");
   const [text, setText] = useState("");
   const [id, setId] = useState(null);
@@ -32,6 +31,10 @@ export function Content({ commentModal, setCommentModal }) {
     dispatch(getAllPosts());
   }, []);
 
+  // useEffect(() => {
+  //   dispatch(getAllUsers()).then((res) => console.log(res));
+  // }, [bookmarks]);
+
   const handleChange = (e) => {
     setText(e.target.value);
     setHeight(e.target.scrollHeight);
@@ -39,8 +42,11 @@ export function Content({ commentModal, setCommentModal }) {
 
   const postHandler = () => {
     if (token) {
-      dispatch(addPost({ postData: { content: text }, token }));
+      dispatch(addPost({ postData: { content: text }, token })).then((res) =>
+        console.log(res)
+      );
       setText("");
+      setHeight("auto");
     } else {
       navigate("/login");
     }
@@ -53,14 +59,10 @@ export function Content({ commentModal, setCommentModal }) {
 
   return (
     <div className="content">
-      <div className={style.post}>
-        <h2>Home</h2>
+      <div className={style.top}>
+        <p className={style.title}>Home</p>
         <div className={style.avatarAndInput}>
-          <img
-            className={style.profilePic}
-            src="https://res.cloudinary.com/therajatg/image/upload/v1655625579/social%20media/mypic_hejkou.jpg"
-            alt="Profile-Pic"
-          />
+          <img className="profilePic" src={user.avatarURL} alt="Profile-Pic" />
           <textarea
             onChange={(e) => handleChange(e)}
             style={{ height: height }}
@@ -77,57 +79,95 @@ export function Content({ commentModal, setCommentModal }) {
         </button>
       </div>
 
-      {posts.map(({ content, _id, avatarURL, comments, likes }) => (
-        <div>
-          <div className={style.post} key={_id}>
-            <Link to={`/${_id}`}>
-              <div className={style.avatarAndInput}>
+      {posts.map(
+        ({
+          content,
+          _id,
+          avatarURL,
+          firstName,
+          lastName,
+          username,
+          comments,
+          likes,
+        }) => (
+          <div>
+            <div className={style.post} key={_id}>
+              <Link to={`/${_id}`} className={style.postContent}>
                 <img src={avatarURL} alt="profile-pic" className="profilePic" />
-                {content}
-              </div>
-            </Link>
+                <div>
+                  <p>
+                    <span>
+                      {firstName} {lastName}{" "}
+                    </span>
 
-            <div className={style.actions}>
-              <div>
-                <BiCommentDetail
-                  title="comment"
-                  onClick={() => commentClickHandler(_id)}
-                />
-                {comments.length > 0 && comments.length}
-              </div>
-              <div>
-                {likes.likeCount > 0 ? (
-                  <div>
-                    <AiFillLike />
-                    {likes.likeCount}
-                  </div>
+                    <span className="lightText">@{username}</span>
+                  </p>
+                  <p className={style.text}>{content}</p>
+                </div>
+              </Link>
+
+              <div className={style.actions}>
+                <div>
+                  <BiCommentDetail
+                    title="comment"
+                    onClick={() => commentClickHandler(_id)}
+                  />
+                  {comments.length > 0 && comments.length}
+                </div>
+                <div>
+                  {likes.likedBy.some(
+                    (person) => person.username === user.username
+                  ) ? (
+                    <AiFillHeart
+                      title="like"
+                      className={style.fillColor}
+                      onClick={() =>
+                        dispatch(dislikePost({ postId: _id, token }))
+                      }
+                    />
+                  ) : (
+                    <AiOutlineHeart
+                      title="like"
+                      onClick={() => dispatch(likePost({ postId: _id, token }))}
+                    />
+                  )}
+
+                  {likes.likedBy.length > 0 && likes.likedBy.length}
+                </div>
+                {bookmarks?.some((post) => post._id === _id) ? (
+                  <BsFillBookmarkFill
+                    title="bookmark"
+                    className={style.fillColor}
+                    onClick={() =>
+                      dispatch(removeBookmark({ postId: _id, token }))
+                    }
+                  />
                 ) : (
-                  <AiOutlineLike title="like" />
+                  <BsBookmark
+                    title="bookmark"
+                    onClick={() =>
+                      dispatch(addBookmark({ postId: _id, token }))
+                    }
+                  />
                 )}
               </div>
-              <div>
-                <AiOutlineDislike title="dislike" />
-                {likes.dislikedBy.length > 0 && likes.dislikedBy.length}
-              </div>
 
-              <BsBookmark title="bookmark" />
+              {commentModal ? (
+                <CommentModal
+                  dispatch={dispatch}
+                  getSinglePost={getSinglePost}
+                  singlePost={singlePost}
+                  addComment={addComment}
+                  postId={id}
+                  token={token}
+                  setCommentModal={setCommentModal}
+                  key={id}
+                />
+              ) : null}
             </div>
-
-            {commentModal ? (
-              <CommentModal
-                dispatch={dispatch}
-                getSinglePost={getSinglePost}
-                singlePost={singlePost}
-                addComment={addComment}
-                postId={id}
-                token={token}
-                setCommentModal={setCommentModal}
-                key={id}
-              />
-            ) : null}
           </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
   );
 }

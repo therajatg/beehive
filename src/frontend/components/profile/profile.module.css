@@ -1,28 +1,65 @@
 .top {
   border-bottom: 3px solid var(--secondary-background-color);
-  display: flex;
-  flex-direction: column;
-  padding: 0 2rem 1rem 2rem;
+  overflow: hidden;
 }
 
 .title {
   font-size: x-large;
   font-weight: 600;
   margin-top: 0;
+  padding-left: 2rem;
 }
 
-.avatarAndInput {
+.profileBanner {
+  object-fit: contain;
+  z-index: -1;
+}
+
+.profilePic {
+  height: 6rem;
+  width: 6rem;
+  object-fit: cover;
+  border-radius: 99rem;
+  margin-left: 2rem;
+  margin-top: -3rem;
+}
+
+.topContent {
   display: flex;
-  column-gap: 2rem;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 0rem 2rem;
 }
 
-.whatHappening {
-  font-size: larger;
-  background-color: var(--primary-background-color);
-  border: none;
-  outline: none;
+.nameAndEditBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editBtn {
+  background-color: var(--link-dark-color);
   color: var(--primary-text-color);
-  width: 100%;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-weight: 550;
+}
+
+.editBtn:hover {
+  background-color: var(--link-light-color);
+}
+
+.topContent > p {
+  margin: 0;
+}
+
+.userWebsite {
+  color: var(--link-dark-color);
+}
+
+.numbers {
+  padding-bottom: 1rem;
 }
 
 .post {
