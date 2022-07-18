@@ -72,10 +72,7 @@ export function Content({ commentModal, setCommentModal }) {
             value={text}
           />
         </div>
-        <button
-          className={style.postBtn}
-          onClick={(content, _id) => postHandler(content, _id)}
-        >
+        <button className={style.postBtn} onClick={postHandler}>
           Post
         </button>
       </div>

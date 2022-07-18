@@ -48,6 +48,7 @@
   background-color: var(--link-dark-color);
   color: white;
   font-size: 1rem;
+  width: 100%;
 }
 
 .signupBtn:hover {

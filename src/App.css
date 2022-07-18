@@ -37,7 +37,7 @@ button:hover {
 .content {
   font-family: var(--text-style);
   border-right: 3px solid var(--secondary-background-color);
-  width: 55%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   border-left: 3px solid var(--secondary-background-color);
