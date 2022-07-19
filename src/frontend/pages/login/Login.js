@@ -18,7 +18,7 @@ export function Login() {
   return (
     <div className={style.loginPage}>
       <form className={style.form} onSubmit={loginHandler}>
-        <h2>Login to beehive</h2>
+        <p>Login to beehive</p>
         <div>
           <label htmlFor="username">Username</label>
           <input

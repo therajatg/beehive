@@ -56,10 +56,10 @@ export function Content({ commentModal, setCommentModal }) {
       <div className={style.top}>
         <p className={style.title}>Home</p>
         <div className={style.avatarAndInput}>
-          <Link to={`/profile/${user.username}`}>
+          <Link to={`/profile/${user?.username}`}>
             <img
               className="profilePic"
-              src={user.avatarURL}
+              src={user?.avatarURL}
               alt="Profile-Pic"
             />
           </Link>
@@ -120,7 +120,7 @@ export function Content({ commentModal, setCommentModal }) {
                 </div>
                 <div className={style.action}>
                   {likes.likedBy.some(
-                    (person) => person.username === user.username
+                    (person) => person.username === user?.username
                   ) ? (
                     <AiFillHeart
                       title="like"

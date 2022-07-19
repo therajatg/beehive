@@ -19,10 +19,7 @@ export function RightNav() {
 
   const whoToFollow = allUsers?.filter(
     (person) =>
-      ![
-        ...user.following.map((item) => item.username),
-        user?.username,
-      ].includes(person.username)
+      !user?.following?.map((item) => item.username).includes(person.username)
   );
 
   const followHandler = (_id) => {
@@ -68,8 +65,8 @@ export function RightNav() {
         <p className={style.whoToFollowTitle}>Who to follow</p>
         {whoToFollow?.map(
           ({ _id, avatarURL, firstName, lastName, username }) => (
-            <Link to={`/profile/${username}`} className={style.user} key={_id}>
-              <div className={style.avatarAndName}>
+            <div className={style.user} key={_id}>
+              <Link to={`/profile/${username}`} className={style.avatarAndName}>
                 <img src={avatarURL} alt="profile-pic" className="profilePic" />
                 <div className={style.name}>
                   <p>
@@ -77,7 +74,7 @@ export function RightNav() {
                   </p>
                   <p className="lightText">@{username}</p>
                 </div>
-              </div>
+              </Link>
               <button
                 className={style.followBtn}
                 onClick={(e) => {
@@ -87,7 +84,7 @@ export function RightNav() {
               >
                 Follow
               </button>
-            </Link>
+            </div>
           )
         )}
       </div>
