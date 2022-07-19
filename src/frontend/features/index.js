@@ -1,4 +1,4 @@
-export { authReducer, logout, login, signup } from "./authSlice";
+export { authReducer, logout, login, signup, updateUser } from "./authSlice";
 export {
   postsReducer,
   getAllPosts,

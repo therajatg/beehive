@@ -2,31 +2,25 @@ import style from "./rightNav.module.css";
 import { followAnotherUser, getAllUsers, getUser } from "../../features/index";
 import { useDispatch, useSelector } from "react-redux";
 import { FaSearch } from "react-icons/fa";
-import { useEffect } from "react";
-import { current } from "@reduxjs/toolkit";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { search } from "../../helpers/index";
 
 export function RightNav() {
   const dispatch = useDispatch();
   const { allUsers } = useSelector((store) => store.user);
   const { token, user } = useSelector((store) => store.auth);
   const { bookmarks } = useSelector((store) => store.posts);
+  const [searchResult, setSearchResult] = useState("");
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const whoToFollow =
-    allUsers.length > 0
-      ? allUsers.filter(
-          (userDetail) =>
-            ![
-              ...allUsers
-                .find((person) => person.username === user.username)
-                ?.following.map((item) => item.username),
-              user.username,
-            ].includes(userDetail.username)
-        )
-      : null;
+  const whoToFollow = allUsers?.filter(
+    (person) =>
+      !user?.following?.map((item) => item.username).includes(person.username)
+  );
 
   const followHandler = (_id) => {
     dispatch(followAnotherUser({ followUserId: _id, token }));
@@ -35,15 +29,44 @@ export function RightNav() {
   return (
     <div className={style.rightNav}>
       <div className={style.search}>
-        <FaSearch className={style.searchIcon} />
-        <input type="search" placeholder="Search Beehive" name="" id="" />
+        <div className={style.searchBar}>
+          <FaSearch className={style.searchIcon} />
+          <input
+            type="search"
+            placeholder="Search User"
+            onChange={(e) => {
+              setSearchResult(search(e.target.value, allUsers));
+            }}
+          />
+        </div>
+        <div className={style.searchedProfiles}>
+          {searchResult &&
+            searchResult.map(({ avatarURL, firstName, lastName, username }) => (
+              <Link to={`/profile/${username}`} className={style.user}>
+                <div className={style.avatarAndName}>
+                  <img
+                    src={avatarURL}
+                    alt="profile-pic"
+                    className="profilePic"
+                  />
+                  <div className={style.name}>
+                    <p>
+                      {firstName} {lastName}
+                    </p>
+                    <p className="lightText">@{username}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
+
       <div className={style.whoToFollow}>
         <p className={style.whoToFollowTitle}>Who to follow</p>
         {whoToFollow?.map(
           ({ _id, avatarURL, firstName, lastName, username }) => (
-            <div className={style.user}>
-              <div className={style.avatarAndName}>
+            <div className={style.user} key={_id}>
+              <Link to={`/profile/${username}`} className={style.avatarAndName}>
                 <img src={avatarURL} alt="profile-pic" className="profilePic" />
                 <div className={style.name}>
                   <p>
@@ -51,7 +74,7 @@ export function RightNav() {
                   </p>
                   <p className="lightText">@{username}</p>
                 </div>
-              </div>
+              </Link>
               <button
                 className={style.followBtn}
                 onClick={(e) => {

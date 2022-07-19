@@ -1,5 +1,5 @@
 import style from "./bookmarks.module.css";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BiCommentDetail } from "react-icons/bi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
@@ -7,14 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllPosts,
   getSinglePost,
-  addPost,
   addComment,
   likePost,
   dislikePost,
   removeBookmark,
   addBookmark,
-  getAllUsers,
-  getAllBookmarks,
 } from "../../features/index";
 import { useState, useEffect } from "react";
 import { CommentModal } from "../index";
@@ -41,79 +38,119 @@ export function Bookmarks({ commentModal, setCommentModal }) {
 
   return (
     <div className="content">
-      <div className={style.post}>
-        <h2>Bookmarks</h2>
+      <div className={style.top}>
+        <p>Bookmarks</p>
       </div>
-
-      {bookmarkedPosts.map(({ content, _id, avatarURL, comments, likes }) => (
-        <div key={_id}>
-          <div className={style.post}>
-            <Link to={`/${_id}`}>
-              <img src={avatarURL} alt="profile-pic" className="profilePic" />
-              {content}
-            </Link>
-
-            <div className={style.actions}>
-              <div>
-                <BiCommentDetail
-                  title="comment"
-                  onClick={() => commentClickHandler(_id)}
-                />
-                {comments.length > 0 && comments.length}
-              </div>
-
-              <div>
-                {likes.likedBy.some(
-                  (person) => person.username === user.username
-                ) ? (
-                  <AiFillHeart
-                    title="like"
-                    className={style.fillColor}
-                    onClick={() =>
-                      dispatch(dislikePost({ postId: _id, token }))
-                    }
+      {bookmarkedPosts.length > 0 ? (
+        bookmarkedPosts.map(
+          ({
+            content,
+            _id,
+            avatarURL,
+            comments,
+            likes,
+            firstName,
+            lastName,
+            username,
+          }) => (
+            <div key={_id}>
+              <div className={style.post}>
+                <Link to={`/page/${_id}`} className={style.postContent}>
+                  {" "}
+                  <img
+                    src={avatarURL}
+                    alt="profile-pic"
+                    className="profilePic"
                   />
-                ) : (
-                  <AiOutlineHeart
-                    title="like"
-                    onClick={() => dispatch(likePost({ postId: _id, token }))}
+                  <div>
+                    <p className={style.name}>
+                      <span>
+                        {firstName} {lastName}{" "}
+                      </span>
+
+                      <span className="lightText">@{username}</span>
+                    </p>
+                    <p className={style.text}>{content}</p>
+                  </div>
+                </Link>
+
+                <div className={style.actions}>
+                  <div className={style.action}>
+                    <BiCommentDetail
+                      title="comment"
+                      onClick={() => commentClickHandler(_id)}
+                    />
+                    {comments.length > 0 && comments.length}
+                  </div>
+
+                  <div className={style.action}>
+                    {likes.likedBy.some(
+                      (person) => person.username === user.username
+                    ) ? (
+                      <AiFillHeart
+                        title="like"
+                        className={style.fillColor}
+                        onClick={() =>
+                          dispatch(dislikePost({ postId: _id, token }))
+                        }
+                      />
+                    ) : (
+                      <AiOutlineHeart
+                        title="like"
+                        onClick={() =>
+                          dispatch(likePost({ postId: _id, token }))
+                        }
+                      />
+                    )}
+
+                    {likes.likedBy.length > 0 && likes.likedBy.length}
+                  </div>
+
+                  {bookmarks?.some((post) => post._id === _id) ? (
+                    <BsFillBookmarkFill
+                      title="bookmark"
+                      className={style.fillColor}
+                      onClick={() =>
+                        dispatch(removeBookmark({ postId: _id, token }))
+                      }
+                    />
+                  ) : (
+                    <BsBookmark
+                      title="bookmark"
+                      onClick={() =>
+                        dispatch(addBookmark({ postId: _id, token }))
+                      }
+                    />
+                  )}
+                </div>
+
+                {commentModal ? (
+                  <CommentModal
+                    dispatch={dispatch}
+                    getSinglePost={getSinglePost}
+                    singlePost={singlePost}
+                    addComment={addComment}
+                    postId={id}
+                    token={token}
+                    setCommentModal={setCommentModal}
+                    key={id}
                   />
-                )}
-
-                {likes.likedBy.length > 0 && likes.likedBy.length}
+                ) : null}
               </div>
-
-              {bookmarks?.some((post) => post._id === _id) ? (
-                <BsFillBookmarkFill
-                  title="bookmark"
-                  className={style.fillColor}
-                  onClick={() =>
-                    dispatch(removeBookmark({ postId: _id, token }))
-                  }
-                />
-              ) : (
-                <BsBookmark
-                  title="bookmark"
-                  onClick={() => dispatch(addBookmark({ postId: _id, token }))}
-                />
-              )}
             </div>
-
-            {commentModal ? (
-              <CommentModal
-                dispatch={dispatch}
-                getSinglePost={getSinglePost}
-                singlePost={singlePost}
-                addComment={addComment}
-                postId={id}
-                token={token}
-                setCommentModal={setCommentModal}
-                key={id}
-              />
-            ) : null}
-          </div>
+          )
+        )
+      ) : (
+        <div className={style.noBookmark}>
+          {" "}
+          <p className={style.noBookmarkText}>No Bookmarked Posts!</p>
+          <img
+            src="https://res.cloudinary.com/therajatg/image/upload/v1657715118/social%20media/No_data_f7tvj1.svg"
+            alt=""
+          />
         </div>
-      ))}
+      )}
+      {}
     </div>
   );
 }

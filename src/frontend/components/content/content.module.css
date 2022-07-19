@@ -48,7 +48,7 @@
 }
 
 .postBtn {
-  background-color: var(--link-light-color);
+  background-color: var(--link-dark-color);
   border-radius: 1rem;
   padding: 0.5rem 1rem;
   width: min-content;
@@ -57,8 +57,8 @@
   align-self: flex-end;
 }
 
-.share:hover {
-  background-color: var(--link-dark-color);
+.postBtn:hover {
+  background-color: var(--link-light-color);
 }
 .actions {
   display: flex;
@@ -68,6 +68,12 @@
 
 .actions:hover {
   cursor: pointer;
+}
+
+.action {
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
 }
 
 .fillColor {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   token: localStorage.getItem("token") ?? null,
-  status: null,
+  status: "idle",
   user: JSON.parse(localStorage.getItem("user")) ?? {},
   error: null,
 };
@@ -28,9 +28,13 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.token = null;
+      state.user = null;
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
     updateUser: (state, action) => {
       state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
   },
   extraReducers: {
@@ -46,7 +50,7 @@ const authSlice = createSlice({
     },
     [signup.rejected]: (state, action) => {
       state.status = "failure";
-      state.error = action.payload.errors;
+      state.error = action.payload.error;
     },
     [login.pending]: (state) => {
       state.status = "loading";
@@ -57,11 +61,10 @@ const authSlice = createSlice({
       state.user = action.payload.foundUser;
       localStorage.setItem("token", action.payload.encodedToken);
       localStorage.setItem("user", JSON.stringify(action.payload.foundUser));
-      console.log(action.payload.foundUser);
     },
     [login.rejected]: (state, action) => {
       state.status = "failure";
-      state.error = action.payload.errors;
+      state.error = action.payload.error;
     },
   },
 });
