@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getAllPosts } from "./postsSlice";
-import { updateUser } from "./authSlice";
+import { updateUser } from "./index";
 
 const initialState = {
   allUsers: [],
@@ -28,9 +27,7 @@ const editUserDetail = createAsyncThunk(
       { userData },
       { headers: { authorization: token } }
     );
-    thunkAPI
-      .dispatch(updateUser(response.data.user))
-      .then((res) => console.log(res));
+    thunkAPI.dispatch(updateUser(response.data.user));
   }
 );
 
@@ -47,13 +44,19 @@ const followAnotherUser = createAsyncThunk(
       {},
       { headers: { authorization: token } }
     );
+    const allUsers = response.data.users;
+    const user = thunkAPI.getState().auth.user;
+    const newData = allUsers.find(
+      (person) => person.username === user.username
+    );
+    thunkAPI.dispatch(updateUser({ ...user, following: newData.following }));
     return response.data.users;
   }
 );
 
 const unfollowAnotherUser = createAsyncThunk(
   "user/unfollowAnotherUser",
-  async ({ unfollowUserId, token }) => {
+  async ({ unfollowUserId, token }, thunkAPI) => {
     const response = await axios.post(
       `/api/users/unfollow/${unfollowUserId}`,
 
@@ -89,7 +92,7 @@ const userSlice = createSlice({
     },
     [getUser.rejected]: (state, action) => {
       state.userStatus = "failure";
-      console.log(action.error);
+      state.errror = action.error;
     },
 
     [editUserDetail.pending]: (state) => {
@@ -113,7 +116,6 @@ const userSlice = createSlice({
     [getUserPosts.rejected]: (state, action) => {
       state.userStatus = "failure";
       state.error = action.error;
-      console.log(state.error);
     },
 
     [followAnotherUser.pending]: (state) => {

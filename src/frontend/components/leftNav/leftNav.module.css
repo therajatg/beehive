@@ -2,7 +2,7 @@
   align-self: flex-start;
   position: sticky;
   top: 0;
-  width: 30%;
+  width: 22%;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -35,13 +35,14 @@
 .postBtn {
   padding: 0.5rem 2rem;
   color: var(--primary-text-color);
-  background-color: var(--link-light-color);
+  background-color: var(--link-dark-color);
   border-radius: 5rem;
   font-size: medium;
+  font-weight: 500;
 }
 
 .postBtn:hover {
-  background-color: var(--link-dark-color);
+  background-color: var(--link-light-color);
 }
 
 .profile {
@@ -50,4 +51,20 @@
   column-gap: 0.5rem;
   margin-bottom: 2rem;
   color: var(--primary-text-color);
+}
+
+@media screen and (max-width: 750px) {
+  .componentName {
+    display: none;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .postBtn {
+    padding: 0.5rem 0.5rem;
+  }
 }

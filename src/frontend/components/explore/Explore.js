@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { CommentModal, EditProfileModal } from "../index";
+import style from "./explore.module.css";
+import { Link } from "react-router-dom";
 import { BiCommentDetail } from "react-icons/bi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPosts, editUserDetail, getUser } from "../../features/index";
-import style from "./profile.module.css";
-import { Link } from "react-router-dom";
 import {
+  getAllPosts,
   getSinglePost,
   addComment,
   likePost,
@@ -15,34 +13,18 @@ import {
   removeBookmark,
   addBookmark,
 } from "../../features/index";
-import { sortPosts } from "../../helpers/index";
+import { useState, useEffect } from "react";
+import { CommentModal } from "../index";
 
-export function Profile({
-  userDetail,
-  commentModal,
-  setCommentModal,
-  editProfileModal,
-  setEditProfileModal,
-}) {
-  const {
-    username,
-    firstName,
-    lastName,
-    followers,
-    following,
-    avatarURL,
-    about,
-    website,
-  } = userDetail;
+export function Explore({ commentModal, setCommentModal }) {
   const dispatch = useDispatch();
-  const { user, token } = useSelector((store) => store.auth);
-  const { bookmarks, singlePost, posts } = useSelector((store) => store.posts);
-  const { userPosts } = useSelector((store) => store.user);
+  const { token, user } = useSelector((store) => store.auth);
+  const { posts, singlePost, bookmarks } = useSelector((store) => store.posts);
   const [id, setId] = useState(null);
 
   useEffect(() => {
-    dispatch(getUserPosts(username));
-  }, [username, posts]);
+    dispatch(getAllPosts());
+  }, [posts]);
 
   const commentClickHandler = (_id) => {
     setCommentModal((prev) => !prev);
@@ -51,70 +33,35 @@ export function Profile({
 
   return (
     <div className="content">
-      <div className={style.top}>
-        <p className={style.title}>
-          {firstName} {lastName}
-        </p>
-
-        <img
-          src="https://res.cloudinary.com/therajatg/image/upload/v1657198669/social%20media/beehive1_phb9wr.png"
-          alt="profile-banner"
-          className={style.profileBanner}
-        />
-
-        <img src={avatarURL} alt="profil-pic" className={style.profilePic} />
-        <div className={style.topContent}>
-          <div className={style.nameAndEditBtn}>
-            <p>
-              {firstName} {lastName}
-              <br />
-              <span className="lightText">@{username}</span>
-            </p>
-
-            <button
-              className={style.editBtn}
-              onClick={() => setEditProfileModal((prev) => !prev)}
-            >
-              Edit Profile
-            </button>
-          </div>
-
-          <p className={style.userBio}>{about}</p>
-          <a href={user.website} className={style.userWebsite}>
-            {website}
-          </a>
-          <p className={style.numbers}>
-            {userPosts.length} <span className="lightText">Posts</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {following.length} <span className="lightText">Following</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {followers.length} <span className="lightText">Followers</span>
-          </p>
-        </div>
-      </div>
-      {userPosts?.length > 0 ? (
-        sortPosts(userPosts)?.map(
-          ({
-            content,
-            _id,
-            avatarURL,
-            firstName,
-            lastName,
-            username,
-            comments,
-            likes,
-          }) => (
-            <div className={style.post} key={_id}>
+      <p className={style.title}>Explore</p>
+      {posts.map(
+        ({
+          content,
+          _id,
+          avatarURL,
+          firstName,
+          lastName,
+          username,
+          comments,
+          likes,
+        }) => (
+          <div key={_id}>
+            <div className={style.post}>
               <Link to={`/page/${_id}`} className={style.postContent}>
                 <img src={avatarURL} alt="profile-pic" className="profilePic" />
+
                 <div>
                   <p>
-                    {firstName} {lastName}{" "}
+                    <span>
+                      {firstName} {lastName}{" "}
+                    </span>
+
                     <span className="lightText">@{username}</span>
                   </p>
                   <p className={style.text}>{content}</p>
                 </div>
               </Link>
+
               <div className={style.actions}>
                 <div className={style.action}>
                   <BiCommentDetail
@@ -124,7 +71,7 @@ export function Profile({
                   {comments.length > 0 && comments.length}
                 </div>
                 <div className={style.action}>
-                  {likes?.likedBy?.some(
+                  {likes.likedBy.some(
                     (person) => person.username === user.username
                   ) ? (
                     <AiFillHeart
@@ -170,23 +117,12 @@ export function Profile({
                   postId={id}
                   token={token}
                   setCommentModal={setCommentModal}
-                />
-              ) : null}
-
-              {editProfileModal ? (
-                <EditProfileModal
-                  editUserDetail={editUserDetail}
-                  dispatch={dispatch}
-                  token={token}
-                  user={user}
-                  setEditProfileModal={setEditProfileModal}
+                  key={id}
                 />
               ) : null}
             </div>
-          )
+          </div>
         )
-      ) : (
-        <p className={style.noPost}>Not posted anything yet!</p>
       )}
     </div>
   );

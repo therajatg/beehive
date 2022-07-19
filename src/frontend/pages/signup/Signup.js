@@ -7,18 +7,29 @@ import { signup } from "../../features/index";
 export function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userDetail, setUserDetail] = useState({});
+  const [userDetail, setUserDetail] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: "",
+    email: "",
+  });
 
   const signupHandler = (e) => {
-    console.log(userDetail);
+    setUserDetail({
+      ...userDetail,
+      avatarURL:
+        "https://res.cloudinary.com/therajatg/image/upload/v1656598066/social%20media/Naval_Ravikant_gd3c2m.webp",
+    });
     e.preventDefault();
     dispatch(signup(userDetail));
+    navigate("/page/home");
   };
 
   return (
     <div className={style.signupPage}>
       <form className={style.form} onSubmit={signupHandler}>
-        <h2>Welcome to beehive</h2>
+        <p>Welcome to beehive</p>
         <div className={style.name}>
           <div>
             <label htmlFor="firstName">First Name</label>
@@ -27,6 +38,7 @@ export function Signup() {
               id="firstName"
               name="firstName"
               value={userDetail.firstName}
+              required
               onChange={(e) =>
                 setUserDetail({ ...userDetail, firstName: e.target.value })
               }
@@ -39,6 +51,7 @@ export function Signup() {
               id="lastName"
               name="lastName"
               value={userDetail.lastName}
+              required
               onChange={(e) =>
                 setUserDetail({ ...userDetail, lastName: e.target.value })
               }
@@ -52,6 +65,7 @@ export function Signup() {
             id="email"
             name="email"
             value={userDetail.email}
+            required
             onChange={(e) =>
               setUserDetail({ ...userDetail, email: e.target.value })
             }
@@ -64,6 +78,7 @@ export function Signup() {
             id="username"
             name="username"
             value={userDetail.username}
+            required
             onChange={(e) =>
               setUserDetail({ ...userDetail, username: e.target.value })
             }
@@ -76,6 +91,7 @@ export function Signup() {
             id="password"
             name="password"
             value={userDetail.password}
+            required
             onChange={(e) =>
               setUserDetail({ ...userDetail, password: e.target.value })
             }
@@ -83,9 +99,17 @@ export function Signup() {
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" />
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+          />
         </div>
-        <button className={style.signupBtn}>Create New Account</button>
+        <div>
+          <button className={style.signupBtn}>Create New Account</button>
+        </div>
+
         <p className={style.loginLine}>
           Already a user?{" "}
           <Link to="/login" className={style.login}>

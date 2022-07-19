@@ -39,6 +39,8 @@ export const signupHandler = function (schema, request) {
       followers: [],
       following: [],
       bookmarks: [],
+      avatarURL:
+        "https://res.cloudinary.com/therajatg/image/upload/v1657694941/social%20media/anonymous_user_tmxvmh.png",
       ...rest,
     };
     const createdUser = schema.users.create(newUser);

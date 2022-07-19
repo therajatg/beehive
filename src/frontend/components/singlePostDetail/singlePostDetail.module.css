@@ -1,16 +1,24 @@
-/* .post {
+.post {
   border-bottom: 3px solid var(--secondary-background-color);
   padding: 2rem;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
-} */
+}
 
-/* .avatarAndInput {
+.title {
+  margin: 0 0 2rem 2rem;
+}
+
+.postContent {
+  color: var(--primary-text-color);
   display: flex;
   column-gap: 2rem;
-  align-items: center;
-} */
+}
+
+.name {
+  margin-top: 0;
+}
 
 .postBtn {
   background-color: var(--link-light-color);
@@ -33,6 +41,12 @@
 
 .actions:hover {
   cursor: pointer;
+}
+
+.action {
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
 }
 
 .profilePic {

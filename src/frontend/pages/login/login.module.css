@@ -10,14 +10,15 @@
   background-color: var(--secondary-background-color);
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 20rem;
   padding: 2rem 2rem 5rem 2rem;
   row-gap: 2rem;
   border-radius: 2rem;
 }
 
-.form h2 {
+.form p {
   margin: auto;
+  font-size: 1.2rem;
 }
 
 .form input {

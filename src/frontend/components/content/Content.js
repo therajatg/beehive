@@ -13,10 +13,10 @@ import {
   dislikePost,
   removeBookmark,
   addBookmark,
-  getAllUsers,
 } from "../../features/index";
 import { useState, useEffect } from "react";
 import { CommentModal } from "../index";
+import { sortPosts } from "../../helpers/index";
 
 export function Content({ commentModal, setCommentModal }) {
   const dispatch = useDispatch();
@@ -29,11 +29,7 @@ export function Content({ commentModal, setCommentModal }) {
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, []);
-
-  // useEffect(() => {
-  //   dispatch(getAllUsers()).then((res) => console.log(res));
-  // }, [bookmarks]);
+  }, [posts]);
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -42,9 +38,7 @@ export function Content({ commentModal, setCommentModal }) {
 
   const postHandler = () => {
     if (token) {
-      dispatch(addPost({ postData: { content: text }, token })).then((res) =>
-        console.log(res)
-      );
+      dispatch(addPost({ postData: { content: text }, token }));
       setText("");
       setHeight("auto");
     } else {
@@ -62,7 +56,14 @@ export function Content({ commentModal, setCommentModal }) {
       <div className={style.top}>
         <p className={style.title}>Home</p>
         <div className={style.avatarAndInput}>
-          <img className="profilePic" src={user.avatarURL} alt="Profile-Pic" />
+          <Link to={`/profile/${user?.username}`}>
+            <img
+              className="profilePic"
+              src={user?.avatarURL}
+              alt="Profile-Pic"
+            />
+          </Link>
+
           <textarea
             onChange={(e) => handleChange(e)}
             style={{ height: height }}
@@ -71,15 +72,12 @@ export function Content({ commentModal, setCommentModal }) {
             value={text}
           />
         </div>
-        <button
-          className={style.postBtn}
-          onClick={(content, _id) => postHandler(content, _id)}
-        >
+        <button className={style.postBtn} onClick={postHandler}>
           Post
         </button>
       </div>
 
-      {posts.map(
+      {sortPosts(posts).map(
         ({
           content,
           _id,
@@ -90,10 +88,16 @@ export function Content({ commentModal, setCommentModal }) {
           comments,
           likes,
         }) => (
-          <div>
-            <div className={style.post} key={_id}>
-              <Link to={`/${_id}`} className={style.postContent}>
-                <img src={avatarURL} alt="profile-pic" className="profilePic" />
+          <div key={_id}>
+            <div className={style.post}>
+              <Link to={`/page/${_id}`} className={style.postContent}>
+                <img
+                  onClick={() => navigate(`/profile/${username}`)}
+                  src={avatarURL}
+                  alt="profile-pic"
+                  className="profilePic"
+                />
+
                 <div>
                   <p>
                     <span>
@@ -107,16 +111,16 @@ export function Content({ commentModal, setCommentModal }) {
               </Link>
 
               <div className={style.actions}>
-                <div>
+                <div className={style.action}>
                   <BiCommentDetail
                     title="comment"
                     onClick={() => commentClickHandler(_id)}
                   />
                   {comments.length > 0 && comments.length}
                 </div>
-                <div>
+                <div className={style.action}>
                   {likes.likedBy.some(
-                    (person) => person.username === user.username
+                    (person) => person.username === user?.username
                   ) ? (
                     <AiFillHeart
                       title="like"
@@ -134,6 +138,7 @@ export function Content({ commentModal, setCommentModal }) {
 
                   {likes.likedBy.length > 0 && likes.likedBy.length}
                 </div>
+
                 {bookmarks?.some((post) => post._id === _id) ? (
                   <BsFillBookmarkFill
                     title="bookmark"

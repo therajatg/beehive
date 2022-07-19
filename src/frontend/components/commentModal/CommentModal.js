@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import style from "./commentModal.module.css";
 import { AiOutlineClose } from "react-icons/ai";
+import { userReducer } from "../../features";
+import { useSelector } from "react-redux";
 
 export function CommentModal({
   dispatch,
@@ -14,6 +16,7 @@ export function CommentModal({
 }) {
   const [text, setText] = useState("");
   const [height, setHeight] = useState("auto");
+  const { user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     dispatch(getSinglePost(postId));
@@ -43,11 +46,7 @@ export function CommentModal({
         </div>
       </div>
       <div className={style.avatarAndInput}>
-        <img
-          src="https://res.cloudinary.com/therajatg/image/upload/v1655625579/social%20media/mypic_hejkou.jpg"
-          alt="profilePic"
-          className="profilePic"
-        />
+        <img src={user.avatarURL} alt="profilePic" className="profilePic" />
         <textarea
           onChange={handleChange}
           value={text}

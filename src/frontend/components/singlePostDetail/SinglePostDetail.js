@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BiCommentDetail } from "react-icons/bi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs";
@@ -14,49 +14,65 @@ import {
 } from "../../features/index";
 import { CommentModal } from "../index";
 import style from "./singlePostDetail.module.css";
+import { Link } from "react-router-dom";
 
 export function SinglePostDetail({ commentModal, setCommentModal }) {
   const { component } = useParams();
   const dispatch = useDispatch();
-  const { singlePost, bookmarks, posts } = useSelector((store) => store.posts);
+  const { bookmarks, posts, singlePost } = useSelector((store) => store?.posts);
   const { token, user } = useSelector((store) => store.auth);
 
   useEffect(() => {
     dispatch(getSinglePost(component));
-  }, [posts]);
+  }, [posts, singlePost]);
+
+  const username = singlePost?.username;
 
   return (
-    <main>
-      <div className="content">
-        {commentModal ? (
-          <CommentModal
-            dispatch={dispatch}
-            getSinglePost={getSinglePost}
-            singlePost={singlePost}
-            addComment={addComment}
-            postId={singlePost?._id}
-            token={token}
-            setCommentModal={setCommentModal}
-          />
-        ) : null}
-        <h2>Post</h2>
-        <div className={style.avatarAndInput}>
-          <img
-            className="profilePic"
-            src={singlePost?.avatarURL}
-            alt="Profile-Pic"
-          />
-          {singlePost?.content}
-        </div>
-        <div className={style.actions}>
+    <div className="content">
+      {commentModal ? (
+        <CommentModal
+          dispatch={dispatch}
+          getSinglePost={getSinglePost}
+          singlePost={singlePost}
+          addComment={addComment}
+          postId={singlePost?._id}
+          token={token}
+          setCommentModal={setCommentModal}
+        />
+      ) : null}
+      <h2 className={style.title}>Post</h2>
+      <div className={style.post}>
+        <div className={style.postContent}>
+          <Link to={`/profile/${username}`}>
+            {" "}
+            <img
+              className="profilePic"
+              src={singlePost?.avatarURL}
+              alt="Profile-Pic"
+            />
+          </Link>
+
           <div>
+            <p className={style.name}>
+              <span>
+                {singlePost?.firstName} {singlePost?.lastName}{" "}
+              </span>
+              <span className="lightText">@{singlePost?.username}</span>
+            </p>
+            <p className={style.text}>{singlePost?.content}</p>
+          </div>
+        </div>
+
+        <div className={style.actions}>
+          <div className={style.action}>
             <BiCommentDetail
               title="comment"
               onClick={() => setCommentModal(true)}
             />
-            {singlePost?.comments.length > 0 && singlePost?.comments.length}
+            {singlePost?.comments?.length > 0 && singlePost?.comments?.length}
           </div>
-          <div>
+          <div className={style.action}>
             {singlePost?.likes.likedBy.some(
               (person) => person.username === user.username
             ) ? (
@@ -75,7 +91,6 @@ export function SinglePostDetail({ commentModal, setCommentModal }) {
                 }
               />
             )}
-
             {singlePost?.likes.likedBy.length > 0 &&
               singlePost?.likes.likedBy.length}
           </div>
@@ -96,15 +111,29 @@ export function SinglePostDetail({ commentModal, setCommentModal }) {
             />
           )}
         </div>
-        {singlePost?.comments.map(({ text, avatarURL, votes, _id }) => (
+      </div>
+
+      {singlePost?.comments?.map(
+        ({ text, avatarURL, _id, firstName, lastName, username }) => (
           <div className={style.post} key={_id}>
-            <div className={style.avatarAndInput}>
-              <img src={avatarURL} alt="profile-pic" className="profilePic" />
-              {text}
+            <div className={style.postContent}>
+              <Link to={`/profile/${username}`}>
+                <img src={avatarURL} alt="profile-pic" className="profilePic" />
+              </Link>
+
+              <div>
+                <p className={style.name}>
+                  <span>
+                    {firstName} {lastName}{" "}
+                  </span>
+                  <span className="lightText">@{username}</span>
+                </p>
+                <p className={style.text}>{text}</p>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-    </main>
+        )
+      )}
+    </div>
   );
 }

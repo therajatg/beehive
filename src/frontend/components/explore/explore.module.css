@@ -1,29 +1,29 @@
+.title {
+  font-size: x-large;
+  font-weight: 600;
+  margin: 0 0 2rem 2rem;
+}
+
 .post {
   border-bottom: 3px solid var(--secondary-background-color);
   padding: 2rem;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
-  column-gap: 2rem;
 }
 
 .postContent {
+  color: var(--primary-text-color);
   display: flex;
   column-gap: 2rem;
 }
 
-.name {
-  margin-top: 0;
+.postContent > div > p {
+  margin: 0;
 }
 
-.top p {
-  font-size: x-large;
-  font-weight: 600;
-  margin: 0 0 2rem 2rem;
-}
-
-a {
-  color: var(--primary-text-color);
+.text {
+  padding-top: 1rem;
 }
 
 .actions {
@@ -44,19 +44,4 @@ a {
 
 .fillColor {
   color: var(--primary-text-color);
-}
-
-.noBookmark {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.noBookmark p {
-  font-size: large;
-}
-
-.noBookmark img {
-  max-height: 30rem;
 }

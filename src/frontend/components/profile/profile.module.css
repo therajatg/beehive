@@ -107,6 +107,17 @@
   cursor: pointer;
 }
 
+.action {
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
+}
+
 .fillColor {
   color: var(--primary-text-color);
+}
+
+.noPost {
+  margin: auto;
+  font-size: large;
 }
