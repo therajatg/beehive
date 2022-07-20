@@ -17,10 +17,12 @@ export function RightNav() {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const whoToFollow = allUsers?.filter(
-    (person) =>
-      !user?.following?.map((item) => item.username).includes(person.username)
-  );
+  const whoToFollow = allUsers
+    ?.filter(
+      (person) =>
+        !user?.following?.map((item) => item.username).includes(person.username)
+    )
+    .filter((person) => person.username !== user?.username);
 
   const followHandler = (_id) => {
     dispatch(followAnotherUser({ followUserId: _id, token }));
