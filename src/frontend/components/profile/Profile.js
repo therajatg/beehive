@@ -71,17 +71,21 @@ export function Profile({
               <span className="lightText">@{username}</span>
             </p>
 
-            <button
-              className={style.editBtn}
-              onClick={() => setEditProfileModal((prev) => !prev)}
-            >
-              Edit Profile
-            </button>
+            {username === user.username && (
+              <button
+                className={style.editBtn}
+                onClick={() => setEditProfileModal((prev) => !prev)}
+              >
+                Edit Profile
+              </button>
+            )}
           </div>
 
-          <p className={style.userBio}>{about}</p>
-          <a href={user.website} className={style.userWebsite}>
-            {website}
+          <p className={style.userBio}>
+            {username === user.username ? user.about : about}
+          </p>
+          <a href={website} className={style.userWebsite}>
+            {username === user.username ? user.website : website}
           </a>
           <p className={style.numbers}>
             {userPosts.length} <span className="lightText">Posts</span>
