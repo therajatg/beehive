@@ -42,12 +42,12 @@
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  font-size: 1rem;
 }
 
 .signupBtn {
   background-color: var(--link-dark-color);
   color: white;
-  font-size: 1rem;
   width: 100%;
 }
 
@@ -66,4 +66,8 @@
 
 .login:hover {
   color: var(--link-light-color);
+}
+
+.dummySignupBtn {
+  color: black;
 }

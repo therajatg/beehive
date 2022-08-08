@@ -35,7 +35,10 @@ export function CommentModal({
   return (
     <div className={style.modal}>
       <div>
-        <AiOutlineClose onClick={() => setCommentModal(false)} />
+        <AiOutlineClose
+          onClick={() => setCommentModal(false)}
+          className={style.close}
+        />
         <div className={style.avatarAndInput}>
           <img
             className="profilePic"

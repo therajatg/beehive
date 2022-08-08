@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { updateUser } from "./index";
+import { toast } from "react-toastify";
 
 const initialState = {
   allUsers: [],
@@ -50,7 +51,8 @@ const followAnotherUser = createAsyncThunk(
       (person) => person.username === user.username
     );
     thunkAPI.dispatch(updateUser({ ...user, following: newData.following }));
-    return response.data.users;
+
+    return allUsers;
   }
 );
 
@@ -124,10 +126,12 @@ const userSlice = createSlice({
     [followAnotherUser.fulfilled]: (state, action) => {
       state.userStatus = "success";
       state.allUsers = action.payload;
+      toast.success("follow successful");
     },
     [followAnotherUser.rejected]: (state, action) => {
       state.userStatus = "failure";
       state.error = action.error;
+      toast.error(`${state.error} Error. Please try again later!`);
     },
 
     [unfollowAnotherUser.pending]: (state) => {

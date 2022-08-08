@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CommentModal, EditProfileModal } from "../index";
 import { BiCommentDetail } from "react-icons/bi";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart, AiFillDelete } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPosts, editUserDetail, getUser } from "../../features/index";
@@ -14,6 +14,7 @@ import {
   dislikePost,
   removeBookmark,
   addBookmark,
+  deletePost,
 } from "../../features/index";
 import { sortPosts } from "../../helpers/index";
 
@@ -163,6 +164,9 @@ export function Profile({
                     }
                   />
                 )}
+                <AiFillDelete
+                  onClick={() => dispatch(deletePost({ postId: _id, token }))}
+                />
               </div>
 
               {commentModal ? (

@@ -2,7 +2,7 @@ import style from "./signup.module.css";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signup } from "../../features/index";
+import { signup, login } from "../../features/index";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -14,15 +14,16 @@ export function Signup() {
     password: "",
     email: "",
   });
+  const [dummy, setDummy] = useState(false);
 
   const signupHandler = (e) => {
+    e.preventDefault();
     setUserDetail({
       ...userDetail,
       avatarURL:
         "https://res.cloudinary.com/therajatg/image/upload/v1656598066/social%20media/Naval_Ravikant_gd3c2m.webp",
     });
-    e.preventDefault();
-    dispatch(signup(userDetail));
+    dummy ? dispatch(login(userDetail)) : dispatch(signup(userDetail));
     navigate("/page/home");
   };
 
@@ -97,19 +98,26 @@ export function Signup() {
             }
           />
         </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            required
-          />
-        </div>
+
         <div>
           <button className={style.signupBtn}>Create New Account</button>
         </div>
-
+        <button
+          className={style.dummySignupBtn}
+          onClick={() => {
+            setDummy(true);
+            setUserDetail({
+              ...userDetail,
+              firstName: "Dummy",
+              lastName: "Singh",
+              email: "dummy@gmail.com",
+              username: "rajat",
+              password: "rajat123",
+            });
+          }}
+        >
+          Dummy Signup
+        </button>
         <p className={style.loginLine}>
           Already a user?{" "}
           <Link to="/login" className={style.login}>

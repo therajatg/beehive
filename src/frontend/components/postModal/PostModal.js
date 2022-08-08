@@ -24,7 +24,10 @@ export function PostModal({ dispatch, addPost, token, setPostModal }) {
   return (
     <div className={style.modal}>
       <div>
-        <AiOutlineClose onClick={() => setPostModal(false)} />
+        <AiOutlineClose
+          onClick={() => setPostModal(false)}
+          className={style.close}
+        />
         <div className={style.avatarAndInput}>
           <img
             className={style.profilePic}

@@ -25,6 +25,8 @@ export function Login() {
             type="text"
             id="username"
             name="username"
+            value={userDetail.username}
+            required
             onChange={(e) =>
               setUserDetail({ ...userDetail, username: e.target.value })
             }
@@ -36,6 +38,8 @@ export function Login() {
             type="password"
             id="password"
             name="password"
+            value={userDetail.password}
+            required
             onChange={(e) =>
               setUserDetail({ ...userDetail, password: e.target.value })
             }

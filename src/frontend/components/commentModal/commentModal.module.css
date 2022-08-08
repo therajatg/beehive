@@ -54,3 +54,7 @@
 .postBtn:hover {
   background-color: var(--link-dark-color);
 }
+
+.close:hover {
+  cursor: pointer;
+}

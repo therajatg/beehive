@@ -1,7 +1,7 @@
 import style from "./content.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import { BiCommentDetail } from "react-icons/bi";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart, AiFillDelete } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +13,7 @@ import {
   dislikePost,
   removeBookmark,
   addBookmark,
+  deletePost,
 } from "../../features/index";
 import { useState, useEffect } from "react";
 import { CommentModal } from "../index";
