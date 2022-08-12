@@ -61,10 +61,19 @@ const unfollowAnotherUser = createAsyncThunk(
   async ({ unfollowUserId, token }, thunkAPI) => {
     const response = await axios.post(
       `/api/users/unfollow/${unfollowUserId}`,
-
-      { headers: { authorization: token } }
+      {},
+      {
+        headers: { authorization: token },
+      }
     );
-    return response.data.users;
+    const allUsers = response.data.users;
+    const user = thunkAPI.getState().auth.user;
+    const newData = allUsers.find(
+      (person) => person.username === user.username
+    );
+    thunkAPI.dispatch(updateUser(newData));
+    console.log(allUsers);
+    return allUsers;
   }
 );
 
@@ -126,7 +135,8 @@ const userSlice = createSlice({
     [followAnotherUser.fulfilled]: (state, action) => {
       state.userStatus = "success";
       state.allUsers = action.payload;
-      toast.success("follow successful");
+      console.log(state.allUsers);
+      toast.success("Successfully Followed");
     },
     [followAnotherUser.rejected]: (state, action) => {
       state.userStatus = "failure";
@@ -140,10 +150,13 @@ const userSlice = createSlice({
     [unfollowAnotherUser.fulfilled]: (state, action) => {
       state.userStatus = "success";
       state.allUsers = action.payload;
+      console.log(state.allUsers);
+      toast.success("Successfully Unfollowed");
     },
     [unfollowAnotherUser.rejected]: (state, action) => {
       state.userStatus = "failure";
       state.error = action.error;
+      toast.error(`${state.error} Error. Please try again later!`);
     },
   },
 });

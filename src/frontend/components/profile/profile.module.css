@@ -31,13 +31,13 @@
   padding: 0rem 2rem;
 }
 
-.nameAndEditBtn {
+.nameAndActionBtn {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.editBtn {
+.actionBtn {
   background-color: var(--link-dark-color);
   color: var(--primary-text-color);
   border: none;
@@ -46,7 +46,7 @@
   font-weight: 550;
 }
 
-.editBtn:hover {
+.actionBtn:hover {
   background-color: var(--link-light-color);
 }
 

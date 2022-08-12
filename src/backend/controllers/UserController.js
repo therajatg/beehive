@@ -273,7 +273,7 @@ export const unfollowUserHandler = function (schema, request) {
       );
     }
     const isFollowing = user.following.some(
-      (currUser) => currUser._id === followUser._id
+      (currUser) => currUser.username === followUser.username
     );
 
     if (!isFollowing) {
@@ -283,13 +283,13 @@ export const unfollowUserHandler = function (schema, request) {
     const updatedUser = {
       ...user,
       following: user.following.filter(
-        (currUser) => currUser._id !== followUser._id
+        (currUser) => currUser.username !== followUser.username
       ),
     };
     const updatedFollowUser = {
       ...followUser,
       followers: followUser.followers.filter(
-        (currUser) => currUser._id !== user._id
+        (currUser) => currUser.username !== user.username
       ),
     };
     this.db.users.update(
@@ -301,7 +301,11 @@ export const unfollowUserHandler = function (schema, request) {
       { ...updatedFollowUser, updatedAt: formatDate() }
     );
 
-    return new Response(200, {}, { users: this.db.users });
+    return new Response(
+      200,
+      {},
+      { users: this.db.users, currentUser: updatedUser }
+    );
   } catch (error) {
     return new Response(
       500,

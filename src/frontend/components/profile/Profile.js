@@ -15,6 +15,9 @@ import {
   removeBookmark,
   addBookmark,
   deletePost,
+  followAnotherUser,
+  unfollowAnotherUser,
+  getAllUsers,
 } from "../../features/index";
 import { sortPosts } from "../../helpers/index";
 
@@ -28,6 +31,7 @@ export function Profile({
   const {
     username,
     firstName,
+    _id,
     lastName,
     followers,
     following,
@@ -38,8 +42,20 @@ export function Profile({
   const dispatch = useDispatch();
   const { user, token } = useSelector((store) => store.auth);
   const { bookmarks, singlePost, posts } = useSelector((store) => store.posts);
-  const { userPosts } = useSelector((store) => store.user);
+  const { userPosts, allUsers } = useSelector((store) => store.user);
   const [id, setId] = useState(null);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  const whoToFollow = allUsers
+    ?.filter(
+      (person) =>
+        !user?.following?.map((item) => item.username).includes(person.username)
+    )
+    .map((person) => person.username)
+    .filter((person) => person !== user?.username);
 
   useEffect(() => {
     dispatch(getUserPosts(username));
@@ -65,19 +81,37 @@ export function Profile({
 
         <img src={avatarURL} alt="profil-pic" className={style.profilePic} />
         <div className={style.topContent}>
-          <div className={style.nameAndEditBtn}>
+          <div className={style.nameAndActionBtn}>
             <p>
               {firstName} {lastName}
               <br />
               <span className="lightText">@{username}</span>
             </p>
 
-            {username === user.username && (
+            {username === user.username ? (
               <button
-                className={style.editBtn}
+                className={style.actionBtn}
                 onClick={() => setEditProfileModal((prev) => !prev)}
               >
                 Edit Profile
+              </button>
+            ) : whoToFollow.includes(username) ? (
+              <button
+                className={style.actionBtn}
+                onClick={() =>
+                  dispatch(followAnotherUser({ followUserId: _id, token }))
+                }
+              >
+                Follow
+              </button>
+            ) : (
+              <button
+                className={style.actionBtn}
+                onClick={() =>
+                  dispatch(unfollowAnotherUser({ unfollowUserId: _id, token }))
+                }
+              >
+                Unfollow
               </button>
             )}
           </div>
