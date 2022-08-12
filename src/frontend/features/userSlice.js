@@ -72,7 +72,6 @@ const unfollowAnotherUser = createAsyncThunk(
       (person) => person.username === user.username
     );
     thunkAPI.dispatch(updateUser(newData));
-    console.log(allUsers);
     return allUsers;
   }
 );
@@ -135,7 +134,6 @@ const userSlice = createSlice({
     [followAnotherUser.fulfilled]: (state, action) => {
       state.userStatus = "success";
       state.allUsers = action.payload;
-      console.log(state.allUsers);
       toast.success("Successfully Followed");
     },
     [followAnotherUser.rejected]: (state, action) => {
@@ -150,7 +148,6 @@ const userSlice = createSlice({
     [unfollowAnotherUser.fulfilled]: (state, action) => {
       state.userStatus = "success";
       state.allUsers = action.payload;
-      console.log(state.allUsers);
       toast.success("Successfully Unfollowed");
     },
     [unfollowAnotherUser.rejected]: (state, action) => {
