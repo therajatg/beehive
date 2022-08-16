@@ -317,4 +317,28 @@ export const posts = [
       },
     ],
   },
+  {
+    _id: uuid(),
+    firstName: "Elon",
+    lastName: "Musk",
+    username: "elon",
+    avatarURL: `${commonURL}/Elon_Musk_at8nqr.jpg`,
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    content:
+      "So far, the entire human civilization is just a flash in the pan, but there is potential to last much longer.",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: uuid(),
+          firstName: "Peter",
+          lastName: "Thiel",
+          username: "peter",
+          avatarURL: `${commonURL}/Peter_Thiel_fl6dtq`,
+        },
+      ],
+      dislikedBy: [],
+    },
+  },
 ];

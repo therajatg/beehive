@@ -45,6 +45,7 @@
 
 .text {
   padding-top: 1rem;
+  word-wrap: break-word;
 }
 
 .postBtn {

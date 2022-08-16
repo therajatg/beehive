@@ -59,6 +59,10 @@ a {
   border-radius: 9999rem;
 }
 
+textarea {
+  resize: none;
+}
+
 @media screen and (max-width: 750px) {
   .content {
     flex-grow: 1;

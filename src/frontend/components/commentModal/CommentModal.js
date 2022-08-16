@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import style from "./commentModal.module.css";
 import { AiOutlineClose } from "react-icons/ai";
-import { userReducer } from "../../features";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export function CommentModal({
   dispatch,
@@ -28,8 +28,12 @@ export function CommentModal({
   };
 
   const addCommentHandler = () => {
-    dispatch(addComment({ postId, commentData: { text }, token }));
-    setCommentModal(false);
+    if (text.trim() === "") {
+      toast.error("Error. Please type something!");
+    } else {
+      dispatch(addComment({ postId, commentData: { text }, token }));
+      setCommentModal(false);
+    }
   };
 
   return (
