@@ -84,9 +84,9 @@ export function Content({ commentModal, setCommentModal }) {
       {sortPosts(posts)
         .filter(
           (post) =>
-            user.following
-              .map((item) => item.username)
-              .includes(post.username) || post.username === user.username
+            user?.following
+              .map((item) => item?.username)
+              .includes(post?.username) || post?.username === user?.username
         )
         .map(
           ({
@@ -130,7 +130,7 @@ export function Content({ commentModal, setCommentModal }) {
                     {comments?.length > 0 && comments?.length}
                   </div>
                   <div className={style.action}>
-                    {likes.likedBy.some(
+                    {likes?.likedBy?.some(
                       (person) => person.username === user?.username
                     ) ? (
                       <AiFillHeart
@@ -152,7 +152,8 @@ export function Content({ commentModal, setCommentModal }) {
                     {likes?.likedBy?.length > 0 && likes?.likedBy?.length}
                   </div>
 
-                  {bookmarks?.some((post) => post._id === _id) ? (
+                  {bookmarks.length > 0 &&
+                  bookmarks?.some((post) => post._id === _id) ? (
                     <BsFillBookmarkFill
                       title="bookmark"
                       className={style.fillColor}

@@ -1,18 +1,29 @@
 import style from "./login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/index";
+import { toast } from "react-toastify";
 
 export function Login() {
   const [userDetail, setUserDetail] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector((store) => store?.auth?.token);
 
   const loginHandler = (e) => {
     e.preventDefault();
-    dispatch(login(userDetail));
-    navigate("/page/home");
+    dispatch(login(userDetail)).then((response) => {
+      if (response?.payload?.encodedToken) {
+        navigate("/page/home");
+      } else if (
+        response.error.message === "Request failed with status code 401"
+      ) {
+        toast.error("Please enter correct credentials");
+      } else {
+        toast.error(`${response.error.message}. Please try again.`);
+      }
+    });
   };
 
   return (

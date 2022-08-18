@@ -39,9 +39,7 @@ const addPost = createAsyncThunk(
 
 const deletePost = createAsyncThunk(
   "posts/deletePost",
-
   async ({ postId, token }) => {
-    console.log(postId, token);
     const response = await axios.delete(`/api/posts/${postId}`, {
       headers: { authorization: token },
     });
@@ -226,7 +224,7 @@ const postsSlice = createSlice({
     [addPost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [deletePost.fulfilled]: (state, action) => {
@@ -237,7 +235,7 @@ const postsSlice = createSlice({
     [deletePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [editPost.fulfilled]: (state, action) => {
@@ -257,7 +255,7 @@ const postsSlice = createSlice({
     [likePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [dislikePost.fulfilled]: (state, action) => {
@@ -268,7 +266,7 @@ const postsSlice = createSlice({
     [dislikePost.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [getAllComments.fulfilled]: (state, action) => {
@@ -288,7 +286,7 @@ const postsSlice = createSlice({
     [addComment.rejected]: (state, action) => {
       state.postsStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [editComment.fulfilled]: (state, action) => {
@@ -347,7 +345,7 @@ const postsSlice = createSlice({
     [addBookmark.rejected]: (state, action) => {
       state.bookmarksStatus = "failed";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [removeBookmark.fulfilled]: (state, action) => {
@@ -358,7 +356,7 @@ const postsSlice = createSlice({
     [removeBookmark.rejected]: (state, action) => {
       state.bookmarksStatus = "failed";
       state.bookmarks = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
   },
 });

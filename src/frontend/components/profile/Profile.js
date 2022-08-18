@@ -160,7 +160,7 @@ export function Profile({
                     title="comment"
                     onClick={() => commentClickHandler(_id)}
                   />
-                  {comments.length > 0 && comments.length}
+                  {comments?.length > 0 && comments?.length}
                 </div>
                 <div className={style.action}>
                   {likes?.likedBy?.some(
@@ -180,9 +180,10 @@ export function Profile({
                     />
                   )}
 
-                  {likes.likedBy.length > 0 && likes.likedBy.length}
+                  {likes?.likedBy?.length > 0 && likes?.likedBy?.length}
                 </div>
-                {bookmarks?.some((post) => post._id === _id) ? (
+                {bookmarks.length > 0 &&
+                bookmarks?.some((post) => post._id === _id) ? (
                   <BsFillBookmarkFill
                     title="bookmark"
                     className={style.fillColor}

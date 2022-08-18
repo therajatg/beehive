@@ -32,8 +32,9 @@ export function Bookmarks({ commentModal, setCommentModal }) {
     dispatch(getAllPosts());
   }, [posts]);
 
-  const bookmarkedPosts = posts.filter((post) =>
-    bookmarks.find((item) => item._id === post._id)
+  const bookmarkedPosts = posts.filter(
+    (post) =>
+      bookmarks.length > 0 && bookmarks?.find((item) => item._id === post._id)
   );
 
   return (
@@ -80,11 +81,11 @@ export function Bookmarks({ commentModal, setCommentModal }) {
                       title="comment"
                       onClick={() => commentClickHandler(_id)}
                     />
-                    {comments.length > 0 && comments.length}
+                    {comments?.length > 0 && comments?.length}
                   </div>
 
                   <div className={style.action}>
-                    {likes.likedBy.some(
+                    {likes?.likedBy?.some(
                       (person) => person.username === user.username
                     ) ? (
                       <AiFillHeart
@@ -103,10 +104,11 @@ export function Bookmarks({ commentModal, setCommentModal }) {
                       />
                     )}
 
-                    {likes.likedBy.length > 0 && likes.likedBy.length}
+                    {likes?.likedBy?.length > 0 && likes?.likedBy?.length}
                   </div>
 
-                  {bookmarks?.some((post) => post._id === _id) ? (
+                  {bookmarks.length > 0 &&
+                  bookmarks?.some((post) => post._id === _id) ? (
                     <BsFillBookmarkFill
                       title="bookmark"
                       className={style.fillColor}

@@ -33,7 +33,7 @@ export function LeftNav({ postModal, setPostModal }) {
   return (
     <div className={style.leftNav}>
       <div className={style.options}>
-        <Link to="/Home" className={style.componentName}>
+        <Link to="/page/home" className={style.componentName}>
           <IoIosPeople className={style.logo} />
         </Link>
 

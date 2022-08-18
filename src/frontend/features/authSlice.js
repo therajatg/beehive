@@ -10,16 +10,12 @@ const initialState = {
 };
 
 const signup = createAsyncThunk("auth/signup", async (userDetail) => {
-  const response = await axios.post("/api/auth/signup", {
-    ...userDetail,
-  });
+  const response = await axios.post("/api/auth/signup", userDetail);
   return response.data;
 });
 
 const login = createAsyncThunk("auth/login", async (userDetail) => {
-  const response = await axios.post("/api/auth/login", {
-    ...userDetail,
-  });
+  const response = await axios.post("/api/auth/login", userDetail);
   return response.data;
 });
 
@@ -53,7 +49,7 @@ const authSlice = createSlice({
     [signup.rejected]: (state, action) => {
       state.status = "failure";
       state.error = action.payload.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later.`);
     },
     [login.pending]: (state) => {
       state.status = "loading";
@@ -68,8 +64,7 @@ const authSlice = createSlice({
     },
     [login.rejected]: (state, action) => {
       state.status = "failure";
-      state.error = action.payload.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      state.error = action.error;
     },
   },
 });

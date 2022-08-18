@@ -73,7 +73,7 @@ export function SinglePostDetail({ commentModal, setCommentModal }) {
             {singlePost?.comments?.length > 0 && singlePost?.comments?.length}
           </div>
           <div className={style.action}>
-            {singlePost?.likes.likedBy.some(
+            {singlePost?.likes?.likedBy.some(
               (person) => person.username === user.username
             ) ? (
               <AiFillHeart
@@ -91,10 +91,11 @@ export function SinglePostDetail({ commentModal, setCommentModal }) {
                 }
               />
             )}
-            {singlePost?.likes.likedBy.length > 0 &&
-              singlePost?.likes.likedBy.length}
+            {singlePost?.likes?.likedBy.length > 0 &&
+              singlePost?.likes?.likedBy.length}
           </div>
-          {bookmarks?.some((post) => post._id === singlePost?._id) ? (
+          {bookmarks.length > 0 &&
+          bookmarks?.some((post) => post._id === singlePost?._id) ? (
             <BsFillBookmarkFill
               title="bookmark"
               className={style.fillColor}

@@ -139,7 +139,7 @@ const userSlice = createSlice({
     [followAnotherUser.rejected]: (state, action) => {
       state.userStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
 
     [unfollowAnotherUser.pending]: (state) => {
@@ -153,7 +153,7 @@ const userSlice = createSlice({
     [unfollowAnotherUser.rejected]: (state, action) => {
       state.userStatus = "failure";
       state.error = action.error;
-      toast.error(`${state.error} Error. Please try again later!`);
+      toast.error(`${state.error.message}. Please try again later!`);
     },
   },
 });
