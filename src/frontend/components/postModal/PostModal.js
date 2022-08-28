@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import style from "./postModal.module.css";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 export function PostModal({ dispatch, addPost, token, setPostModal }) {
   const [text, setText] = useState("");
@@ -13,13 +14,17 @@ export function PostModal({ dispatch, addPost, token, setPostModal }) {
   };
 
   const postClickHandler = () => {
-    dispatch(
-      addPost({
-        postData: { content: text },
-        token,
-      })
-    );
-    setPostModal(false);
+    if (text.trim() === "") {
+      toast.error("Error. Please type something!");
+    } else {
+      dispatch(
+        addPost({
+          postData: { content: text },
+          token,
+        })
+      );
+      setPostModal(false);
+    }
   };
   return (
     <div className={style.modal}>
