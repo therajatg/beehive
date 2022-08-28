@@ -63,33 +63,42 @@ export function RightNav() {
         </div>
       </div>
 
-      <div className={style.whoToFollow}>
-        <p className={style.whoToFollowTitle}>Who to follow</p>
-        {whoToFollow?.map(
-          ({ _id, avatarURL, firstName, lastName, username }) => (
-            <div className={style.user} key={_id}>
-              <Link to={`/profile/${username}`} className={style.avatarAndName}>
-                <img src={avatarURL} alt="profile-pic" className="profilePic" />
-                <div className={style.name}>
-                  <p>
-                    {firstName} {lastName}
-                  </p>
-                  <p className="lightText">@{username}</p>
-                </div>
-              </Link>
-              <button
-                className={style.followBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  followHandler(_id);
-                }}
-              >
-                Follow
-              </button>
-            </div>
-          )
-        )}
-      </div>
+      {whoToFollow.length > 0 && (
+        <div className={style.whoToFollow}>
+          <p className={style.whoToFollowTitle}>Who to follow</p>
+          {whoToFollow?.map(
+            ({ _id, avatarURL, firstName, lastName, username }) => (
+              <div className={style.user} key={_id}>
+                <Link
+                  to={`/profile/${username}`}
+                  className={style.avatarAndName}
+                >
+                  <img
+                    src={avatarURL}
+                    alt="profile-pic"
+                    className="profilePic"
+                  />
+                  <div className={style.name}>
+                    <p>
+                      {firstName} {lastName}
+                    </p>
+                    <p className="lightText">@{username}</p>
+                  </div>
+                </Link>
+                <button
+                  className={style.followBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    followHandler(_id);
+                  }}
+                >
+                  Follow
+                </button>
+              </div>
+            )
+          )}
+        </div>
+      )}
     </div>
   );
 }
