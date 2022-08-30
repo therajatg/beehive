@@ -199,9 +199,11 @@ export function Profile({
                     }
                   />
                 )}
-                <AiFillDelete
-                  onClick={() => dispatch(deletePost({ postId: _id, token }))}
-                />
+                {user.username === username && (
+                  <AiFillDelete
+                    onClick={() => dispatch(deletePost({ postId: _id, token }))}
+                  />
+                )}
               </div>
 
               {commentModal ? (
